@@ -2,15 +2,19 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
 
-\title{How to Write an Algorithm}
+\title{How to Write and Analyze an Algorithm}
 \author{Mohammed Rizin \\ Unemployed}
+
 
 \begin{document}
 \maketitle
 
+\section{How to Write an algorithm}
+\noindent
 \begin{algorithm}
-\caption{Swapping two number}\label{swap}
+\caption{Swapping two numbers}\label{swap}
 \begin{algorithmic}
 \Procedure{Swap}{$a, b$}
 \State$a \rightarrow temp$
@@ -19,9 +23,18 @@
 \EndProcedure{}
 \end{algorithmic}
 \end{algorithm}
+
+We can write algorithm in any format. The intent behind writing an algorithm is to make it easy for the programmer to quickly understand it and make it into program.
+
+
+
 \[
-\int_{0}^{\frac{\pi}{2}} \sin{x}\,dx = \left[-\cos{x}\right]_{0}^{\frac{\pi}{2}} = -\cos{\frac{\pi}{2}} - (-\cos{0}) = 0 + 1 = 1
+\begin{aligned}
+\int_{0}^{\frac{\pi}{2}} \sin{x}\,dx &= \left[-\cos{x}\right]_{0}^{\frac{\pi}{2}} \\
+&= -\cos{\frac{\pi}{2}} - (-\cos{0}) \\
+&= 0 + 1 = 1
+\end{aligned}
+\tag{2}
 \]
-$\clubsuit $
 
 \end{document}
