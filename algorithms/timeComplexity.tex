@@ -388,6 +388,24 @@ The equivalent for loop is:
     \end{algorithmic}
 \end{algorithm}
 
+Lets trace the values of $a = 10$ and $b = 15$:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        $a$ & $b$ & $a \neq b$\\
+        \hline
+        10 & 15 & True\\
+        5 & 15 & True\\
+        5 & 10 & True\\
+        5 & 5 & False\\
+        \hline
+    \end{tabular}
+\end{table}
+So it took 3 iterations to find the GCD of 10 and 15.\\
+\textbf{Time complexity:} $O(\max(a,b))$
+min Time complexity: $O(1)$ and max Time complexity: $O(n)$
+
 
 \section{Conclusion}
 \begin{algorithm}[H]
