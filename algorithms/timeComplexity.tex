@@ -1,4 +1,4 @@
-\documentclass[twoside]{article}
+\documentclass{article}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[a4paper, margin=1in]{geometry}
@@ -164,6 +164,78 @@ Time complexity: $O(\sqrt{n})$.
 \]
 Time complexity: $O(\log_2{n})$.
 
+However, If you notice log function, which gives both float and integer values, then should we take floor or ceil of the floating point value.
 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|}
+        \hline
+        n = 8\\
+        \hline
+        1\\
+        2\\
+        4\\
+        $8 < 8$ \text{fails !!}\\ 
+        \hline
+        So in total we could execute it for 3 iterations. $\log_2{8} = 3$
+    \end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|}
+        \hline
+        n = 10\\
+        \hline
+        1\\
+        2\\
+        4\\
+        8\\
+        $16 < 8$ \text{fails !!}\\ 
+        \hline
+        So in total we could execute it for 4 iterations. $\log_2{10} = 3.32$\\
+        $ceil(\log_2{10}) = 4$
+    \end{tabular}
+\end{table}
+
+\subsection{Division Loop}
+\begin{algorithm}
+    \caption{For Loop with Division}\label{divloop}    
+    \begin{algorithmic}
+        \For{$i \gets n$  \textbf{while} $i \geq n$  \textbf{step} $\frac{i}{2}$}
+            \State Statement
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{table}[H]
+    \flushleft
+    \begin{tabular}{|c|c|}
+        \hline
+        step & $i$\\
+        \hline
+        1 & $n$\\
+        2 & $\frac{n}{2}$\\
+        3 & $\frac{n}{2^2}$\\
+        4 & $\frac{n}{2^3}$\\
+        5 & $\frac{n}{2^4}$\\
+        \vdots & \vdots\\
+        k & $\frac{n}{2^{k-1}}$\\
+        k+1 & $\frac{n}{2^k}$\\
+        \hline
+    \end{tabular}
+\end{table}
+
+\[
+\begin{aligned}
+    \frac{n}{2^{k-1}} &< 1\\
+    2^{k-1} &> n\\
+    {k - 1} &> \log_2{n}\\
+    k &> \log_2{n} - 1\\
+    \\
+    \text{This algorithm is }O(\log_2{n})
+\end{aligned}
+\]
 
 \end{document}
