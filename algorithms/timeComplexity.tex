@@ -23,7 +23,7 @@
     \caption{Simple for loop}\label{simple_for}
     \begin{algorithmic}
         \For{$i \gets 0$ \textbf{to} $n-1$}
-            \State $.... STMT ....$
+            \State $....STMT....$
         \EndFor
     \end{algorithmic}
 \end{algorithm}
@@ -35,7 +35,7 @@ Time complexity: $O(n)$.
     \caption{Simple reverse loop}\label{simple_for2}
     \begin{algorithmic}
         \For{$i \gets n$ \textbf{down to} $1$}
-            \State $.... STMT ....$
+            \State $....STMT....$
         \EndFor
     \end{algorithmic}
 \end{algorithm}
@@ -47,7 +47,7 @@ Time complexity: $O(n)$.
     \caption{Simple for loop with step}\label{simple_for3}
     \begin{algorithmic}
         \For{$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $2$}
-            \State $.... STMT ....$
+            \State $....STMT....$
         \EndFor
     \end{algorithmic}
 \end{algorithm}
@@ -60,7 +60,7 @@ Time complexity: $O(n)$ (as $n/2$ is asymptotically $O(n)$).
     \begin{algorithmic}
         \For{$i \gets 0$ \textbf{to} $n-1$}
             \For{$j \gets 0$ \textbf{to} $i-1$}
-                \State $.... STMT ....$
+                \State $....STMT....$
             \EndFor
         \EndFor
     \end{algorithmic}
@@ -203,14 +203,14 @@ However, If you notice log function, which gives both float and integer values, 
 \begin{algorithm}
     \caption{For Loop with Division}\label{divloop}    
     \begin{algorithmic}
-        \For{$i \gets n$  \textbf{while} $i \geq n$  \textbf{step} $\frac{i}{2}$}
+        \For{$i \gets n$  \textbf{while} $i \geq 1$  \textbf{step} $\frac{i}{2}$}
             \State Statement
         \EndFor
     \end{algorithmic}
 \end{algorithm}
 
 \begin{table}[H]
-    \flushleft
+    \centering
     \begin{tabular}{|c|c|}
         \hline
         step & $i$\\
@@ -227,15 +227,105 @@ However, If you notice log function, which gives both float and integer values, 
     \end{tabular}
 \end{table}
 
+\noindent The loop stops when:
 \[
 \begin{aligned}
-    \frac{n}{2^{k-1}} &< 1\\
-    2^{k-1} &> n\\
-    {k - 1} &> \log_2{n}\\
-    k &> \log_2{n} - 1\\
-    \\
-    \text{This algorithm is }O(\log_2{n})
+    \frac{n}{2^{k-1}} &< 1, \\
+    2^{k-1} &> n, \\
+    k - 1 &> \log_2{n}, \\
+    k &> \log_2{n} + 1.
 \end{aligned}
 \]
+Thus, the time complexity is $O(\log_2{n})$.
+
+\subsection{Square Loop}
+\begin{algorithm}[H]
+    \caption{Loop till square of i is less than n}
+    \begin{algorithmic}
+    \For{$i \gets 1$ \textbf{while} $i^2 < n$}
+    \State Statement
+    \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{table}[H]
+    \begin{tabular}{|c|c|}
+        \hline
+        i & $i^2$\\
+        \hline
+        0 & 0\\
+        1 & 1\\
+        2 & 4\\
+        3 & 9\\
+        \vdots & \vdots\\
+        k & $k^2$\\
+        \hline
+    \end{tabular}
+\end{table}
+
+\noindent The loop stops when:
+\[
+\begin{aligned}
+    k^2 &\geq n\\
+    k &\geq \sqrt{n}\\
+\end{aligned}
+\]
+Thus, the time complexity is $O(\sqrt{n})$.
+
+\subsection{Independent loop}
+\begin{algorithm}[H]
+    \caption{Independent for loops}\label{simple_for}
+    \begin{algorithmic}
+        \For{$i \gets 0$ \textbf{to} $n-1$}
+            \State $....STMT....$
+        \EndFor
+        \For{$j \gets 0$ \textbf{to} $n-1$}
+            \State $....STMT....$
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+\noindent
+Since this is not nested. They are independent loops. They have $O(n)$ for both the loops adding to $T(n) = 2n$. \\
+But \textbf{Time complexity:} $O(n)$.
+
+\subsection{One loop dependent on another}
+\begin{algorithm}[H]
+    \caption{Independent for loops}\label{simple_for}
+    \begin{algorithmic}
+        \State $p \gets 0$
+        \For{$i \gets 0$ \textbf{while} $i < n$ \textbf{step} $2 \cdot i$}
+            \State $p++$ \Comment{$ p = \log_2(n)$}
+        \EndFor
+        \For{$j \gets 0$ \textbf{while} $j < p$ \textbf{step} $2 \cdot j$}
+            \State $...STMT...$ \Comment{$\log_2{p}$}
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+\noindent
+Thus this algorithm takes $O(\log{\log{n}})$
+
+\section{Conclusion}
+\begin{algorithm}[H]
+    \begin{algorithmic}
+        \For {$i \gets 0$ \textbf{to} $n-1$}
+        \State Statement \Comment{$\blacktriangleright O(n)$}
+        \EndFor\\
+        \For {$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $i+2$}
+        \State Statement \Comment{$\frac{n}{2} \blacktriangleright O(n)$}
+        \EndFor\\
+        \For {$i \gets n$ \textbf{to} $1$}
+        \State Statement \Comment{$\blacktriangleright O(n)$}
+        \EndFor\\
+        \For {$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $i \cdot 2$}
+        \State Statement \Comment{$\blacktriangleright O(\log_2{n})$}
+        \EndFor\\
+        \For {$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $i \cdot 3$}
+        \State Statement \Comment{$\blacktriangleright O(\log_3{n})$}
+        \EndFor\\
+        \For {$i \gets n$ \textbf{to} $1$ \textbf{step} $\frac{i}{2}$}
+        \State Statement \Comment{$\blacktriangleright O(\log_2{n})$}
+        \EndFor\\
+    \end{algorithmic}
+\end{algorithm}
 
 \end{document}
