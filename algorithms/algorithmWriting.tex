@@ -1,8 +1,10 @@
-\documentclass[]{article}
+\documentclass[twocolumn]{article}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
 
 \title{How to Write and Analyze an Algorithm}
 \author{Mohammed Rizin \\ Unemployed}
@@ -48,6 +50,7 @@ How much CPU registers are being used by the algorithm.
 
 The criteria depends on the project you're working. Based on the project requirements, you can choose the criteria for analyzing the algorithm.
 
+% \newpage
 \subsection{Example of Analyzing an algorithm}
 \noindent
 \begin{algorithm}
@@ -128,8 +131,8 @@ So the space complexity is $S(n) = n + 3$ i.e. $O(n) = n$.
     \caption{Addition of Matrices}\label{matadd}
     \begin{algorithmic}
     \Procedure{MatAdd} {$A, B, n$}
-        \For{$(\hspace{2mm} i \gets 0; \hspace{1mm} i < n; \hspace{1mm} i++ \hspace{2mm})$}
-            \For{$(\hspace{2mm} j \gets 0; \hspace{1mm} j < n; \hspace{1mm} j++ \hspace{2mm})$}
+        \For{$(\hspace{2mm} i \gets 0; \hspace{1mm} i < n; \hspace{1mm} i++ \hspace{2mm})$} $\blacktriangleright{ n+1 }$
+            \For{$(\hspace{2mm} j \gets 0; \hspace{1mm} j < n; \hspace{1mm} j++ \hspace{2mm})$} $\blacktriangleright{ n * (n+1) }$
                 \State $C[i, j] \gets A[i, j] + B[i, j]$ 
             \EndFor
         \EndFor
@@ -151,7 +154,38 @@ $i \rightarrow 1$ \\
 $j \rightarrow 1$ \\
 So the space complexity is $S(n) = 3n^2 + 3$ i.e. $O(n) = n^2$.
 
+\subsection{Matrix Multiplication}
+\noindent
+\begin{algorithm}
+    \caption{Matrix Multiplication}\label{matmul}
+    \begin{algorithmic}
+        \Procedure{MatMul}{$A, B, n$}
+            \For{$(\hspace{2mm} i \gets 0; \hspace{1mm} i < n; \hspace{1mm} i++ \hspace{2mm})$} \Comment{ n+1 }
+                \For{$(\hspace{2mm} j \gets 0; \hspace{1mm} j < n; \hspace{1mm} j++ \hspace{2mm})$} \Comment{ n * (n+1) }
+                    \State $C[i, j] \gets 0$ \Comment{ n * n }
+                    \For{$(\hspace{2mm} k \gets 0; \hspace{1mm} k < n; \hspace{1mm} k++ \hspace{2mm})$} \Comment{ $n^2* (n+1)$ }
+                        \State$C[i, j] = C[i, j] + A[i, k] * B[k, j]$ \Comment{ n * n * n }
+                    \EndFor
+                \EndFor
+            \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
+\subsubsection{Time Complexity}
+\noindent
+The total time taken by the algorithm is $T(n) = 2n^3 + 3n^2 + 2n + 1$. So the time complexity is $O(n) = n^3$.
+
+\subsubsection{Space Complexity}
+\noindent
+$A \rightarrow n^2$ \\
+$B \rightarrow n^2$ \\
+$C \rightarrow n^2$ \\
+$n \rightarrow 1$ \\
+$i \rightarrow 1$ \\
+$j \rightarrow 1$ \\
+$k \rightarrow 1$ \\
+So the space complexity is $S(n) = 3n^2 + 4$ i.e. $O(n) = n^2$.
 
 \end{document}
 
