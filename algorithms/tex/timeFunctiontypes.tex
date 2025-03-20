@@ -1,4 +1,4 @@
-\documentclass[twocolumn]{article}
+\documentclass[]{article}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[a4paper, margin=1in]{geometry}
@@ -19,8 +19,57 @@
 \section{Introduction}
 So far we have seen a lot of functions and we calculated its time complexity. But we have not seen the types of time functions. In this article, we will see the types of time functions. 
 Now let's see the types of time functions.
-Then How does this happen? Let's see. this is the main topic of this article.
-This way we can classify the time functions into different types. Why do we need to classify the time functions? Because we can easily understand the time complexity of the function.
-This happens as follows.
+
+\section{Types of Time Functions}
+The types of time functions are:
+\begin{enumerate}
+    \item Constant Time Function $\rightarrow$ ($O(1)$)
+    \item Linear Time Function $\rightarrow$ ($O(n)$)
+    \item Quadratic Time Function $\rightarrow$ ($O(n^2)$)
+    \item Logarithmic Time Function $\rightarrow$ ($O(\log n)$)
+    \item Exponential Time Function $\rightarrow$ ($O(2^n)$)
+    \item Factorial Time Function $\rightarrow$ ($O(n!)$)
+    \item Polynomial Time Function $\rightarrow$ ($O(n^k)$)
+    \item n log n Time Function $\rightarrow$ ($O(n \log n)$)
+    \item Exponential Time Function $\rightarrow$ ($O(n^n)$)
+\end{enumerate}
+
+\section{Compare Time Functions}
+Let's compare the time functions. We will compare the time functions with the help of a graph. The graph is shown below.
+
+\[
+\begin{aligned}
+    1 < \log{n} < \sqrt{n} < n < n\cdot \log{n} < n^2 < n^3 < \cdots < 2^n <  3^n < n^n
+\end{aligned}
+\]
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        $\log{n}$ & $n$ & $n^2$ & $2^n$ \\
+        \hline
+        0 & 1 & 1 & 2 \\
+        1 & 2 & 4 & 4 \\
+        2 & 4 & 16 & 16 \\
+        3 & 8 & 64 & 256 \\
+        \hline
+    \end{tabular}
+    \caption{Time Functions}
+\end{table}
+
+So, 
+\[
+\begin{aligned}
+    n^{100} &< 2^n \\
+    n^k &< 2^n \\
+\end{aligned}
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../images/time-complexity-examples.png}
+    \caption{Time Functions}
+\end{figure}
 
 \end{document}
