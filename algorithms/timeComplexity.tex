@@ -7,8 +7,8 @@
 \usepackage{graphicx}
 \usepackage{float}
 
-\setlength{\parskip}{0pt} % Reduce paragraph spacing
-\setlength{\parindent}{0pt} % Remove paragraph indentation
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
 
 \title{Time Complexity}
 \author{Mohammed Rizin \\ Unemployed}
@@ -125,5 +125,45 @@ Assuming $p \leq n$:
 \end{aligned}
 \]
 Time complexity: $O(\sqrt{n})$.
+
+% \newpage
+\subsection{Multiplication Loop}
+\begin{algorithm}[H]
+    \caption{Multiplication loop}\label{simple_for6}
+    \begin{algorithmic}
+        \For{$i \gets 1$ \textbf{while} $i \leq n$ \textbf{step} $2 \cdot i$ }
+            \State$...Statement...$
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        step & $i$\\
+        \hline
+        1 & 2\\
+        2 & 4\\
+        3 & 8\\
+        4 & 16\\
+        5 & 32\\
+        \vdots & \vdots\\
+        k & $2^k$\\
+        \hline
+    \end{tabular}
+\end{table}
+\[
+\begin{aligned}
+    \text{This stops when } i &> n: \\
+    \text{i.e.  } 2^k &> n, \\
+    \log_2{2^k} &> \log_2{n}\\
+    k \cdot \log_2{2} &> \log_2{n}\\
+    k &> \log_2{n}
+\end{aligned}
+\]
+Time complexity: $O(\log_2{n})$.
+
+
 
 \end{document}
