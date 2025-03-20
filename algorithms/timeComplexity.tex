@@ -302,7 +302,92 @@ But \textbf{Time complexity:} $O(n)$.
     \end{algorithmic}
 \end{algorithm}
 \noindent
-Thus this algorithm takes $O(\log{\log{n}})$
+Thus this algorithm takes $O(\log{\log{n}})$\\
+
+\section{Analysis of If \& While loops}
+\begin{algorithm}[H]
+    \caption{If and While loops}\label{simple_for}
+    \begin{algorithmic}
+        \State $i \gets 0$ \Comment{1}
+        \While{$i < n$} \Comment{$n + 1$}
+            \State Statement \Comment{$n$}
+            \State $i++$ \Comment{$n$}
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+$T(n) = 2n + 2$\\
+\textbf{Time complexity:} $O(n)$
+
+\subsection{While with two variables}
+\begin{algorithm}[H]
+    \caption{While with two variables}\label{twovar_while}
+    \begin{algorithmic}
+        \State $i \gets 1$
+        \State $j \gets 1$
+        \While{$j < n$}
+            \State Statement
+            \State $j \gets j+i$
+            \State $i \gets i + 1$
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+Let us trace the values of $i$ and $j$:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        $i$ & $j$\\
+        \hline
+        1 & 1\\
+        2 & 2\\
+        3 & $2+2$\\
+        4 & $2+2+3$\\
+        5 & $2+2+3+4$\\
+        6 & $2+2+3+4+5$\\
+        \vdots & \vdots\\
+        k & $2+2+3+4+\cdots + k-1$\\
+        k+1 & $2+2+3+4+\cdots + k \approx \frac{k \cdot {(k+1)} }{2}$\\
+        \hline
+    \end{tabular}
+\end{table}
+
+The loop stops when:
+\[
+\begin{aligned}
+    \frac{k(k+1)}{2} &\geq n, \\
+    k^2 &\gtrapprox n, \\
+    k &\gtrapprox \sqrt{n}.
+\end{aligned}
+\]
+Thus, the time complexity is $O(\sqrt{n})$.
+
+The equivalent for loop is:
+\begin{algorithm}[H]
+    \caption{For loop with two variables}\label{twovar_for}
+    \begin{algorithmic}
+        \For{$i \gets 1$ \textbf{while} $j < n$}
+            \State Statement
+            \State $j \gets j+i$
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Example : GCD of two numbers}
+\begin{algorithm}[H]
+    \caption{GCD of two numbers}\label{gcd}
+    \begin{algorithmic}
+        \While{$a \neq b$}
+            \If{$a > b$}
+                \State $a \gets a - b$
+            \Else
+                \State $b \gets b - a$
+            \EndIf
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
 
 \section{Conclusion}
 \begin{algorithm}[H]
