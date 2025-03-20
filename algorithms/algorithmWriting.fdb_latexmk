@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1742433558.18756 "/Users/morizin/Documents/Notes/algorithms/algorithmWriting.tex" "algorithmWriting.pdf" "algorithmWriting" 1742433558.568 0
-  "/Users/morizin/Documents/Notes/algorithms/algorithmWriting.tex" 1742433557.96165 5446 5ae66a91556dfec4686d217257bb1f27 ""
+["pdflatex"] 1742433737.64712 "/Users/morizin/Documents/Notes/algorithms/algorithmWriting.tex" "algorithmWriting.pdf" "algorithmWriting" 1742433737.9886 0
+  "/Users/morizin/Documents/Notes/algorithms/algorithmWriting.tex" 1742433737.01228 5962 8e170235d388a41fac7bc328d07498f6 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -50,8 +50,8 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1742396960 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1742396888 3345739 469082f472d8c9139fcc77f98961dbb3 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "algorithmWriting.aux" 1742433558.52729 1984 2d8e577a624bdfdbc7d982b1a5c152ff "pdflatex"
-  "algorithmWriting.tex" 1742433557.96165 5446 5ae66a91556dfec4686d217257bb1f27 ""
+  "algorithmWriting.aux" 1742433737.95167 2211 d86dd2dd3f04b9e9767f2c47c74fa8a3 "pdflatex"
+  "algorithmWriting.tex" 1742433737.01228 5962 8e170235d388a41fac7bc328d07498f6 ""
   (generated)
   "algorithmWriting.aux"
   "algorithmWriting.log"
