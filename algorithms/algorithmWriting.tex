@@ -90,11 +90,14 @@ Even if it 3000 variables, the space complexity is 1 (i.e. $O(n) = 1$).
 \caption{Sum of all elements in an array}\label{sum}
 \begin{algorithmic}
 \Procedure{Sum}{$A, n$}
-\State$S \gets 0$
-\For{$0$ to $n-1$}
+\State$S \gets 0$ \Comment{ 1 unit of time }
+\For{$(\hspace{2mm}\underbrace{i = 0}_{1};\hspace{2mm} \underbrace{i < n}_{n+1};\hspace{2mm} \underbrace{i++}_{n} \hspace{2mm})$} 
     \State$S \gets S + A[i]$
 \EndFor\EndProcedure\end{algorithmic}
 \end{algorithm}
+
+If there is any statement that is executed for some number of times, then we can use the Frequency Count Method to analyze the algorithm.
+
 
 \end{document}
 

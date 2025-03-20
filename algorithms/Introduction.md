@@ -47,3 +47,26 @@ Characteristics of Algorithm
 3. Definiteness
 4. Finiteness ------ Since Algorithm is `func`, it should stop at some point
 5. Effectiveness ----
+
+
+$$
+\begin{array}{l}
+\hline
+\textbf{Algorithm 1: Factorial Calculation} \\
+\hline
+\textbf{Input:} \quad n \quad \textbf{Output:} \quad \text{Factorial of } n \\
+\hline
+1. \quad \textbf{Function} \quad \text{Factorial}(n) \\
+2. \quad \quad \textbf{if} \quad n = 0 \quad \textbf{then} \\
+3. \quad \quad \quad \textbf{return} \quad 1 \\
+4. \quad \quad \textbf{else} \\
+5. \quad \quad \quad \textbf{return} \quad n \times \text{Factorial}(n-1) \\
+6. \quad \textbf{End Function} \\
+\hline
+\end{array}
+$$
+
+
+
+
+
