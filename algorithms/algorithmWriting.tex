@@ -91,12 +91,54 @@ Even if it 3000 variables, the space complexity is 1 (i.e. $O(n) = 1$).
 \begin{algorithmic}
 \Procedure{Sum}{$A, n$}
 \State$S \gets 0$ \Comment{ 1 unit of time }
-\For{$(\hspace{2mm}\underbrace{i = 0}_{1};\hspace{2mm} \underbrace{i < n}_{n+1};\hspace{2mm} \underbrace{i++}_{n} \hspace{2mm})$} 
+\For{$(\hspace{2mm}\underbrace{i = 0}_{1};\hspace{2mm} \underbrace{i < n}_{n+1};\hspace{2mm} \underbrace{i++}_{n} \hspace{2mm})$} \Comment{ n+ 1 units of time }
     \State$S \gets S + A[i]$
 \EndFor\EndProcedure\end{algorithmic}
 \end{algorithm}
 
+\subsubsection{Time Complexity}
+\noindent
 If there is any statement that is executed for some number of times, then we can use the Frequency Count Method to analyze the algorithm.
+
+Suppose we have array of size $5$ i.e. [1, 2, 3, 4, 5]. \\
+These are the values of $i$ in the loop. \\
+Intially $i = 0$ \\
+After 1st iteration $i = 1$  Since i is post incremented, the value of $i$ is updated after the loop. \\
+Check if $i < n$ \\
+After 2nd iteration $i = 2$ \\
+Check if $i < n$ \\
+... \\
+After 5th iteration $i = 5$ \\
+Check if $i \not< n$ \\ 
+\noindent
+Since the condition is checked $n+1$ times, the time taken by that statement is $n+1$ units of time. \\
+Whatever statement inside the loop is executed $n$ times. 
+So the total time taken by the algorithm is $T(n) = 2n + 3$. So the time complexity is $O(n) = n$.
+
+\subsubsection{Space Complexity}
+$A \rightarrow \text{array of size n}$ \\
+$S \rightarrow 1 word$ \\
+$n \rightarrow 1 word$ \\
+$i \rightarrow 1 word$ \\
+So the space complexity is $S(n) = n + 3$ i.e. $O(n) = n$.
+
+\subsection{Addition of two matrices}
+\noindent
+\begin{algorithm}
+    \caption{Addition of Matrices}\label{matadd}
+    \begin{algorithmic}
+    \Procedure{MatAdd} {$A, B, n$}
+        \For{$(\hspace{2mm} i \gets 0; \hspace{1mm} i < n; \hspace{1mm} i++ \hspace{2mm})$}
+            \For{$(\hspace{2mm} j \gets 0; \hspace{1mm} j < n; \hspace{1mm} j++ \hspace{2mm})$}
+                \State $C[i, j] \gets A[i, j] + B[i, j]$ 
+            \EndFor
+        \EndFor
+    \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+
+
 
 
 \end{document}
