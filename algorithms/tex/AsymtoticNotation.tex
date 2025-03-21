@@ -6,9 +6,12 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{float}
+\usepackage{pifont}
 
 \setlength{\parskip}{1pt}
 \setlength{\parindent}{0pt}
+
+\newcommand{\xmark}{\ding{55}}%
 
 \title{Asymtotic Notations}
 \author{Mohammed Rizin \\ Unemployed}
@@ -37,7 +40,7 @@ The type of Asymptotic Notations are:
 \end{aligned}
 \]
 
-\section{Big Oh Notation}
+\subsection{Big Oh Notation}
 \[
 \begin{aligned}
         \text{The function } f(n) = O{(g(n))} &\leftrightarrow &\exists \text{ +ve constant $c$ and } 
@@ -78,11 +81,12 @@ For eg:
 
 So I can say that $f(n) = O(n)$, $f(n) = O(n^2)$, $f(n) = O(n^3)$, $f(n) = O(2^n)$, $f(n) = O(n!)$, etc.
 But we cannot say $f(n) = O(\log{n})$, $f(n) = O(\sqrt{n})$, $f(n) = O(1)$, etc.
-
+\newline
+\newline
 ?` Now a question arises, Why do I need to write all those if we know that $f(n) = O(n)$? 
 Yeah, When we write Big Oh, we write the closest upper bound. When you any above that, it is also correct. But not usefulYeah, When we write Big Oh, we write the closest upper bound. When you any above that, it is also correct. But not useful.
 
-\section{Big Omega Notation}
+\subsection{Big Omega Notation}
 \[
 \begin{aligned}
         \text{The function } f(n) = \Omega{(g(n))} &\leftrightarrow &\exists \text{ +ve constant $c$ and } 
@@ -126,13 +130,110 @@ So which one is correct? $f(n) = \Omega(n)$ or $f(n) = \Omega(\log{n})$? Both ar
 \boxed{f(n) = \Omega(n)}
 \]
 
-\subsection{Conclusion Example 1: $f(n) = 2n + 3$}
+\subsection{Theta Notation}
+\[
+\begin{aligned}
+        \text{The function } f(n) = \Theta{(g(n))} &\leftrightarrow &\exists \text{ +ve constant $c_1$, $c_2$ and } 
+        n_0 \text{ such that } c_1 \cdot g{(n)} &\leq f{(n)} \leq c_2 \cdot g{(n)} &\forall n &\geq n_0
+\end{aligned}
+\]
+
+For eg:
+
+\[
+\begin{aligned}
+        f(n) &= 2n + 3 \\
+        1n \leq 2n &+ 3 \leq 5n  \hspace{5pt} \forall  n \geq 1 \\
+        \underbrace{1}_{c1} \cdot \underbrace{n}_{g(n)} &\leq f(n) \leq \underbrace{5}_{c2} \cdot \underbrace{n}_{g(n)}\\    
+\end{aligned}
+\]
+
+\[
+g(n)\text{ on both sides is }n. \\
+\text{So, the Time Complexity is: } \\
+f(n) = \Theta(n)\\
+\]
+
+
+\[
+\begin{aligned}
+        f(n) &= 2n + 3 \\
+    \underbrace{1n^2}_{\mathsf{X}}  \leq 2n &+ 3 \leq 5n^2  \hspace{5pt} \forall  n \geq 1 \\
+        \text{So, the only Time Complexity : } \boxed{f(n) = \Theta(n)}\\
+\end{aligned}
+\]
+Since I cannot find the any other $g(n)$ which satisfies the above equation, I can say that the Time Complexity is \boxed{\Theta(n)}.
+
+\subsection{Some Myths}
+
+People say that $f(n) = O(n)$ represent the "Worst" case. But it is not true. It is the "Upper Bound". And $f(n) = \Omega(n)$ represent the "Best" case. But it is not true. It is the "Lower Bound".
+\newline
+Don't get confused with the "Best" and "Worst" case with "Lower" and "Upper" bound.
+
+\subsection{ Example 1}
+\[
+\begin{aligned}
+    f(n) &= n! \\
+    f(n) &= 1 \cdot 2 \cdot 3 \cdot 4 \cdots n \\
+    1 \cdot 1 \cdot 1 \cdot 1 \cdots 1 &\leq 1 \cdot 2 \cdot 3 \cdots n \leq n \cdot n \cdot n \cdots n \hspace{5pt} \forall n \geq 1 \\
+    1 &\leq n! \leq n^n \\
+\end{aligned}
+\]
+
+So, we have the Upper Bound Time Complexity :  \boxed{f(n) = O(n^n)} \\
+And we have the Lower Bound Time Complexity :  \boxed{f(n) = \Omega(1)} \\
+There is no $g(n)$ which satisfies the above equation. So, the Average Time Complexity doesn't exist.
+
+
+The best Asymptotic Notation is $\Theta(n)$. Because it gives the average time function. It is useful.
+Suppose you are buying a mobile phone and the shopkeeper says that there are phones between 2000 and 200000 even though you said that you want a phone for 20000. 2000 is the lower bound and 200000 is the upper bound. Are they wrong
+? No. But it is not useful. So, the best Asymptotic Notation is $\Theta(n)$. 
+If you are telling me the Big Oh , i don't know whether it is nearest upper bound or not. So, it is not useful. So, the best Asymptotic Notation is $\Theta(n)$.
+Big Oh and Big Omega are mainly useful in case of $n!$.
+
 \begin{enumerate}
     \item The function $f(n)$ belong to the $n$ class. So everything above it is upper bound. So the upper bound of $f(n)$ could be $O(n)$, $O(n^2)$, $O(n^3)$, $O(2^n)$, $O(n!)$, etc.
 
     \item The function $f(n)$ belong to the $n$ class. So everything below it is lower bound. So the lower bound of $f(n)$ could be $\Omega(n)$, $\Omega(\sqrt{n})$, $\Omega(\log{n})$, $\Omega(1)$, etc.
 
     \item The function $f(n)$ belong to the $n$ class. So everything equal to it is average bound. So the average bound of $f(n)$ could be $\Theta(n)$.
+\end{enumerate}
+
+\section{Properties of Asymptotic Notations}
+
+\subsection{General Properties}
+\begin{enumerate}
+\item if $f(n)$ is $O(g(n))$  then $a* f(n)$ is $O(g(n))$ for any constant $a > 0$.\\
+eg: $f(n) = 2n^2 + 3$ is $O(n^2)$\\
+then $2f(n) = 4n^2 + 6$ is $O(n^2)$\\
+This is true for all three Asymptotic Notations.
+
+\item Reflexive Property: if $f(n)$ is given then $f(n)$ is $O(f(n))$\\
+eg : $f(n) = n^2$ is $O(n^2)$\\
+This is true for all three Asymptotic Notations.\\
+\item Transitive Property: if $f(n)$ is $O(g(n))$ and $g(n)$ is $O(h(n))$ then $f(n)$ is $O(h(n))$\\
+eg: $f(n) = n^2$ is $O(n^3)$ and $n^3$ is $O(n^4)$ then $f(n)$ is $O(n^4)$\\
+This is true for all three Asymptotic Notations.\\
+\item Symmetric Property: if $f(n)$ is $\Theta(g(n))$ then $g(n)$ is $\Theta(f(n))$\\
+eg: $f(n) = n^2$ is $\Theta(n^2)$ then $n^2$ is $\Theta(n^2)
+$\\
+This is true for only $\Theta$ Asymptotic Notation.\\
+\item Transpose Symmetric: if $f(n)$ is $O(g(n))$ then $g(n)$ is $\Omega(f(n))$\\
+eg: $f(n) = n^2$ is $O(n^3)$ then $n^3$ is $\Omega(n^2)$\\
+This is true for both $O \text{ and }\Omega$ Notations.\\
+
+\item if $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$ then 
+
+
+
+\[
+\centering
+\begin{aligned}
+    \overbrace{g(n)}^{\downarrow} \leq f(n) \leq \overbrace{g(n)}^{\downarrow} \\
+    \boxed{f(n) = \Theta(g(n))}\\
+\end{aligned}
+\]
+
 \end{enumerate}
 
 
