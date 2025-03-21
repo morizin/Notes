@@ -6,6 +6,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{float}
+\usepackage{tikz}
 \usepackage{pifont}
 
 \setlength{\parskip}{1pt}
@@ -304,5 +305,62 @@ So, $n^2\log{n}$ is greater than $n{(\log{n})}^{10}$.
 \end{aligned}
 \]
 
+\[
+\begin{aligned}
+    \text{Which is greater } f(n) = 2^n &\text{ or } 2^{2n}? \\
+    2^n &\bioperation 2^{2n} \\
+    \text{Applying }\log &\text{ on both sides, }\\
+    n &< 2n \\
+    \text{ Asymtotically we cannot say both} &\text{ are equal after applying } \log \\
+\end{aligned}
+\]
+
+\textbf{Another Example:} \\ 
+\[ 
+\begin{aligned}
+f_1(n) &=     
+\begin{cases} 
+      n^3 & n < 100 \\
+      n^2 & n \geq 100\\
+\end{cases}\\
+f_2(n) &=     
+\begin{cases} 
+      n^2 & n < 10000 \\
+      n^2 & n \geq 10000\\
+\end{cases}\\
+\\
+\text{Which is greater } f_1(n) &\text{ or } f_2(n)? \\
+\end{aligned}
+\]
+%draw a number line just draw
+\begin{center}
+    \begin{tikzpicture}
+        % Draw the number line
+        \draw[thick,<->] (0,0) -- (6,0) ;
+        \node[below] at (2.5,-1.0 ) {\textbf{Number Line}};
+        \node[below] at (-1.0,-0.25) {$n \rightarrow$};
+        
+        \foreach \x/\label in {1/100, 2/100, 3/1000, 4/10000} {
+            \draw (\x,0.1) -- (\x,-0.1);
+            \ifnum\x=2
+                \node at (\x,0.3) {\label};
+            \fi
+            \ifnum\x=4 
+                \node at (\x,0.3) {\label};
+            \fi
+        }
+        \draw[thin,<-|] (0,-0.2) -- (1.95,-0.2);
+        \node[below] at (1,-0.3) {$f_1(n)$};
+
+        \draw[thin,|-|] (2.05,-0.2) -- (3.95,-0.2);
+        \node[below, scale=0.8] at (3,-0.34) {$f_1(n) = f_2(n)$};
+
+        \draw[thin,|->] (4.05,-0.2) -- (6,-0.2);
+        \node[below] at (4.5,-0.3) {$f_2(n)$};
+    \end{tikzpicture}
+\end{center}
+\begin{center}
+Since $f_2(n)$ is greater than $f_1(n)$ $ \forall n \geq 10000$. So, $f_2(n)$ is greater than $f_1(n)$.
+\end{center}
 
 \end{document}
