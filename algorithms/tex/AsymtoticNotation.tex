@@ -351,13 +351,13 @@ f_2(n) &=
             \fi
         }
         \draw[thin,<-|] (0,-0.2) -- (1.95,-0.2);
-        \node[below] at (1,-0.3) {$f_1(n)$};
+        \node[below, scale=0.8] at (1,-0.3) {$f_1(n)$};
 
         \draw[thin,|-|] (2.05,-0.2) -- (3.95,-0.2);
-        \node[below, scale=0.8] at (3,-0.34) {$f_1(n) = f_2(n)$};
+        \node[below, scale=0.8] at (3,-0.3) {$f_1(n) = f_2(n)$};
 
         \draw[thin,|->] (4.05,-0.2) -- (6,-0.2);
-        \node[below] at (4.5,-0.3) {$f_2(n)$};
+        \node[below, scale=0.8] at (5,-0.3) {$f_2(n)$};
     \end{tikzpicture}
     \captionof{figure}{Comparison of $f_1(n)$ and $f_2(n)$}
 \end{center}
@@ -365,4 +365,36 @@ f_2(n) &=
 Since $f_2(n)$ is greater than $f_1(n)$ $ \forall n \geq 10000$. So, $f_2(n)$ is greater than $f_1(n)$.
 \end{center}
 
+\section{Exercises}
+\textbf{True or False: }
+\begin{enumerate}
+    \item $(n+k)^m = \Theta(n^m)$ 
+    \item $2^{n+1} = O(2^n)$
+    \item $2^{2n} = O(2^n)$
+    \item $\sqrt{\log{n}} = O(\log(\log{n}))$
+    \item $n^{\log{n}} = O(2^n)$  
+\end{enumerate}
+
+\textbf{Answers: }
+\begin{enumerate}
+    \item True\\
+    According to Binomial Expansion, the highest degree term is $n^m$. \\
+    So, $(n+k)^m = \Theta(n^m)$
+    \item True\\
+    $2^{n+1} = 2 \cdot 2^n \simeq O(2^n)$ which is also upper bound.
+    \item False\\
+    $2^{2n} = 4^n \simeq O(4^n)$\\
+    $2^n$ is not upper bound of $4^n$.
+    \item False\\
+    $\sqrt{\log{n}} = \log{(\log{n})}$\\
+    $\frac{1}{2}\log{n} = \log{\log{\log{n}}}$\\
+    $\log{n} \geq \log{\log{\log{n}}}$ This is not upper bound.
+    \item True\\
+    $n^{log{n}} = 2^n$\\
+    $\log^2{n} = n$\\
+    $\log{n} = \sqrt{n}$\\
+    $\log{log{n}} = \frac{1}{2}\log{n}$\\
+    So $\log{\log{n}} \leq \log{n}$\\
+    i.e. $n^{log{n}} = O(2^n)$\\
+\end{enumerate}
 \end{document}
