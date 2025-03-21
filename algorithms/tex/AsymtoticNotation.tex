@@ -12,6 +12,7 @@
 \setlength{\parindent}{0pt}
 
 \newcommand{\xmark}{\ding{55}}%
+\newcommand{\bioperation}{{\hspace{5pt} | \hspace{5pt}}}
 
 \title{Asymtotic Notations}
 \author{Mohammed Rizin \\ Unemployed}
@@ -234,8 +235,74 @@ This is true for both $O \text{ and }\Omega$ Notations.\\
 \end{aligned}
 \]
 
+\item if $f(n) = O(g(n))$ and $d(n) = O(e(n))$ then $f(n) \pm d(n) = O(max(g(n), e(n)))$\\
+eg: \\
+\quad $f(n) = n^2$ is $O(n^2)$ \\ \quad and $d(n) = n^3$ is $O(n^3)$ \\ \quad then $f(n) \pm d(n) = n^2 + n^3 is O(n^3)$\\
+
+\item if $f(n) = O(g(n))$ and $d(n) = O(e(n))$ then $f(n) \cdot d(n) = O(g(n) \cdot e(n))$\\
+eg: \\
+\quad $f(n) = n^2$ is $O(n^2)$ \\ \quad and $d(n) = n^3$ is $O(n^3)$ \\ \quad then $f(n) \cdot d(n) = n^2 \cdot n^3 is O(n^5)$\\
 \end{enumerate}
 
+\section{Comparison of functions}
+
+For eg : Between $n^2$ and $n^3$ which one is greater?
+1. Method 1: Sample Method
+\[
+\begin{aligned}
+    n = 1 &\rightarrow 1^2 = 1 \hspace{5pt} \text{and} \hspace{5pt} 1^3 = 1 \\
+    n = 2 &\rightarrow 2^2 = 4 \hspace{5pt} \text{and} \hspace{5pt} 2^3 = 8 \\
+    n = 3 &\rightarrow 3^2 = 9 \hspace{5pt} \text{and} \hspace{5pt} 3^3 = 27 \\
+    n = 4 &\rightarrow 4^2 = 16 \hspace{5pt} \text{and} \hspace{5pt} 4^3 = 64 \\
+    n = 5 &\rightarrow 5^2 = 25 \hspace{5pt} \text{and} \hspace{5pt} 5^3 = 125 \\
+\end{aligned}
+\]  
+So, $n^3$ is greater than $n^2$.
+
+2. Method 2: Apply Log on both sides
+\[
+\begin{aligned}
+    n^2 &\leq n^3 \\
+    \log{n^2} &\leq \log{n^3} \\
+    2\log{n} &\leq 3\log{n} \\
+    2 &\leq 3 \\
+\end{aligned}
+\]  
+So, $n^3$ is greater than $n^2$.
+
+\textbf{Logarithm Properties: } \\
+\[ 
+\begin{aligned}
+    \log{ab} &= \log{a} + \log{b} \\
+    \log{\frac{a}{b}} &= \log{a} - \log{b} \\
+    \log{a^b} &= b\log{a} \\
+    a^{\log_c{b}} &= b^{\log_c{a}} \\
+    a^b = n &\rightarrow b = \log_a{n} \\
+\end{aligned}
+\]
+
+For Example: \\
+Which is greater $n^2\log{n} \text{ or } n{(\log{n})}^{10}$? \\
+\[
+\begin{aligned}
+    n^2\log{n} &\bioperation n{(\log{n})}^{10} \\
+    2\log{n} + \log(\log{n}) &\bioperation \log{n} + 10{\log(\log{n})} \\
+    \text{Bigger term is $\log{n}$ and } &\log({\log{n}}) \text{ becomes negligible}\\
+    2\log{n} &\geq \log{n} \\
+\end{aligned}
+\]
+So, $n^2\log{n}$ is greater than $n{(\log{n})}^{10}$.
+
+\[
+\begin{aligned}
+    \text{Which is greater } f(n) = 3n^{\sqrt{n}} &\text{ or } 2^{\sqrt{n}\cdot \log_2{n}}? \\
+    3n^{\sqrt{n}} &\bioperation 2^{\sqrt{n}\cdot \log_2{n}} \\
+    3n^{\sqrt{n}} &\bioperation 2^{\log_2{n^{\sqrt{n}}}} \\
+    3n^{\sqrt{n}} &\bioperation {n^{\sqrt{n}}}^{\log_2{2} = 1} \\
+    3n^{\sqrt{n}} &\simeq  n^{\sqrt{n}} \\
+    \text{ Asymtotically both} &\text{ are equal.} \\
+\end{aligned}
+\]
 
 
 \end{document}
