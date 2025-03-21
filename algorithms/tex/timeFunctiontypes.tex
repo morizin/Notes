@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{caption}
 
 \setlength{\parskip}{1em}
 \setlength{\parindent}{0em}
@@ -43,33 +44,59 @@ Let's compare the time functions. We will compare the time functions with the he
 \end{aligned}
 \]
 
-\begin{table}[H]
+\begin{figure}[H]
     \centering
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-        $\log{n}$ & $n$ & $n^2$ & $2^n$ \\
-        \hline
-        0 & 1 & 1 & 2 \\
-        1 & 2 & 4 & 4 \\
-        2 & 4 & 16 & 16 \\
-        3 & 8 & 64 & 256 \\
-        \hline
-    \end{tabular}
-    \caption{Time Functions}
-\end{table}
-
-So, 
-\[
-\begin{aligned}
-    n^{100} &< 2^n \\
-    n^k &< 2^n \\
-\end{aligned}
-\]
+    \hbox{ % Creates a box around the content
+        \begin{minipage}{0.9\textwidth} % Adjust width as needed
+            \begin{minipage}{0.48\textwidth} % Left side for the table
+                \centering
+                \begin{tabular}{|c|c|c|c|}
+                    \hline
+                    $\log{n}$ & $n$ & $n^2$ & $2^n$ \\
+                    \hline
+                    0 & 1 & 1 & 2 \\
+                    1 & 2 & 4 & 4 \\
+                    2 & 4 & 16 & 16 \\
+                    3 & 8 & 64 & 256 \\
+                    \hline
+                \end{tabular}
+                \captionof{table}{Time Functions}
+            \end{minipage}
+            \hfill
+            \begin{minipage}{0.48\textwidth} % Right side for the image
+                \centering
+                \includegraphics[width=\textwidth]{../images/1_6mpaXFsrRPFXSKXK5Qgm8w.png}
+                \captionof{figure}{Time Functions}
+            \end{minipage}
+        \end{minipage}
+    }
+\end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{../images/1_6mpaXFsrRPFXSKXK5Qgm8w.png}
-    \caption{Time Functions}
+    \hbox{
+        \begin{minipage}{0.9\textwidth}
+            \begin{minipage}{0.5\textwidth}
+            \centering
+            \begin{tabular}{|c|c|c|c|}
+                \hline
+                    $\log{n}$ & $n$ & $n^2$ & $2^n$ \\
+                    \hline
+                    0 & 1 & 1 & 2 \\
+                    1 & 2 & 4 & 4 \\
+                    2 & 4 & 16 & 16 \\
+                    3 & 8 & 64 & 256 \\
+                    \hline
+                \end{tabular}
+                \captionof{table}{Time Functions}
+            \end{minipage}
+            \begin{minipage}{0.5\textwidth}
+                \centering
+                \includegraphics[width=1\textwidth]{../images/1_6mpaXFsrRPFXSKXK5Qgm8w.png}
+                \captionof{figure}{Time Functions}
+            \end{minipage}
+        \end{minipage}
+    }
 \end{figure}
 
 \end{document}

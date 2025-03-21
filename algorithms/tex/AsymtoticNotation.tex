@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[a4paper, margin=0.8in]{geometry}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+
+\setlength{\parskip}{1pt}
+\setlength{\parindent}{0pt}
+
+\title{Asymtotic Notations}
+\author{Mohammed Rizin \\ Unemployed}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Types of Asymptotic Notations}
+
+In last Section we learn the Types of Time function:
+\[
+\boxed{
+\begin{aligned}
+    1 < \log{n} < \sqrt{n} < n < n\cdot \log{n} < n^2 < n^3 < \cdots < 2^n <  3^n < n^n
+\end{aligned}
+}
+\]
+
+The type of Asymptotic Notations are:
+\[
+\begin{aligned}
+    &\text{1. } O(n) &&\blacktriangleright \text{Big Oh} &&\blacktriangleright \text{Upper Bound} \\
+    &\text{2. } \Omega(n) &&\blacktriangleright \text{Big Omega} &&\blacktriangleright \text{Lower Bound} \\
+    &\text{3. } \Theta(n) &&\blacktriangleright \text{Theta} &&\blacktriangleright \text{Average Time Function (useful)}
+\end{aligned}
+\]
+
+\section{Big Oh Notation}
+\[
+\begin{aligned}
+        \text{The function } f(n) = O{(g(n))} &\leftrightarrow &\exists \text{ +ve constant $c$ and } 
+        n_0 \text{ such that } f{(n)} &\leq c \cdot g{(n)} &\forall n &\geq n_0  
+\end{aligned}
+\]
+
+For eg:
+\[
+\begin{aligned}
+        f(n) &= 2n + 3 \\
+        2n+3 &\leq 10n \hspace{5pt} \forall n \geq 1 \\
+        f(n) &\leq 10 \cdot g(n) \\
+        \text{The Time Complexity : } f(n) &= O(n)
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+        f(n) &= 2n + 3 \\
+        2n+3 &\leq 2n + 3n \\
+        2n+3 &\leq 5n \hspace{5pt} \forall n \geq 1 \\
+        f(n) &\leq 5 \cdot g(n) \\
+        \text{Still The Time Complexity : } f(n) &= O(n)
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+    f(n) &= 2n + 3 \\
+    \text{So Can I write: }\\
+        2n+3 &\leq 2n^2 + 3n^2\\ 
+        2n+3 &\leq 5\cdot n^2 \hspace{5pt} \forall n \geq 1 \\
+        f(n) &\leq 5 \cdot g(n) \\
+        \text{Yes, Then the Time Complexity : } f(n) &= O(n^2)
+\end{aligned}
+\]
+
+So I can say that $f(n) = O(n)$, $f(n) = O(n^2)$, $f(n) = O(n^3)$, $f(n) = O(2^n)$, $f(n) = O(n!)$, etc.
+But we cannot say $f(n) = O(\log{n})$, $f(n) = O(\sqrt{n})$, $f(n) = O(1)$, etc.
+
+?` Now a question arises, Why do I need to write all those if we know that $f(n) = O(n)$? 
+Yeah, When we write Big Oh, we write the closest upper bound. When you any above that, it is also correct. But not usefulYeah, When we write Big Oh, we write the closest upper bound. When you any above that, it is also correct. But not useful.
+
+\section{Big Omega Notation}
+\[
+\begin{aligned}
+        \text{The function } f(n) = \Omega{(g(n))} &\leftrightarrow &\exists \text{ +ve constant $c$ and } 
+        n_0 \text{ such that } f{(n)} &\geq c \cdot g{(n)} &\forall n &\geq n_0
+\end{aligned}
+\]
+
+For eg:
+\[
+\begin{aligned}
+        f(n) &= 2n + 3 \\
+        2n+3 &\geq 1n \hspace{5pt} \forall n \geq 1 \\
+        f(n) &\geq \underbrace{1}_c \cdot \underbrace{n}_{g(n)}\\
+        \text{The Time Complexity : } f(n) &= \Omega(n)
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+        f(n) &= 2n + 3 \\
+        2n+3 &\geq 2n + 3 \\
+        2n+3 &\geq 5n \hspace{5pt} \forall n \geq 1 \\
+        f(n) &\geq 5 \cdot g(n) \\
+        \text{Still The Time Complexity : } f(n) &= \Omega(\log{n})
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+    f(n) &= 2n + 3 \\
+    \text{So Can I write: }\\
+        2n+3 &\geq 2n^2 + 3n^2\\ 
+        2n+3 &\geq 5\cdot n^2 \hspace{5pt} \forall n \geq 1 \\
+        f(n) &\geq 5 \cdot g(n) \\
+        \text{No, the Time Complexity can't be: } f(n) &= \Omega(n^2)
+\end{aligned}
+\]
+
+So which one is correct? $f(n) = \Omega(n)$ or $f(n) = \Omega(\log{n})$? Both are correct. But the closest lower bound is 
+\[
+\boxed{f(n) = \Omega(n)}
+\]
+
+\subsection{Conclusion Example 1: $f(n) = 2n + 3$}
+\begin{enumerate}
+    \item The function $f(n)$ belong to the $n$ class. So everything above it is upper bound. So the upper bound of $f(n)$ could be $O(n)$, $O(n^2)$, $O(n^3)$, $O(2^n)$, $O(n!)$, etc.
+
+    \item The function $f(n)$ belong to the $n$ class. So everything below it is lower bound. So the lower bound of $f(n)$ could be $\Omega(n)$, $\Omega(\sqrt{n})$, $\Omega(\log{n})$, $\Omega(1)$, etc.
+
+    \item The function $f(n)$ belong to the $n$ class. So everything equal to it is average bound. So the average bound of $f(n)$ could be $\Theta(n)$.
+\end{enumerate}
+
+
+
+\end{document}
