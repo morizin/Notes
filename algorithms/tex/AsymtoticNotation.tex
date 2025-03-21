@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[]{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[a4paper, margin=0.8in]{geometry}
@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage{tikz}
 \usepackage{pifont}
+\usepackage{caption}
 
 \setlength{\parskip}{1pt}
 \setlength{\parindent}{0pt}
@@ -337,7 +338,7 @@ f_2(n) &=
     \begin{tikzpicture}
         % Draw the number line
         \draw[thick,<->] (0,0) -- (6,0) ;
-        \node[below] at (2.5,-1.0 ) {\textbf{Number Line}};
+        % \node[below] at (2.5,-1.0 ) {\textbf{Number Line}};
         \node[below] at (-1.0,-0.25) {$n \rightarrow$};
         
         \foreach \x/\label in {1/100, 2/100, 3/1000, 4/10000} {
@@ -358,6 +359,7 @@ f_2(n) &=
         \draw[thin,|->] (4.05,-0.2) -- (6,-0.2);
         \node[below] at (4.5,-0.3) {$f_2(n)$};
     \end{tikzpicture}
+    \captionof{figure}{Comparison of $f_1(n)$ and $f_2(n)$}
 \end{center}
 \begin{center}
 Since $f_2(n)$ is greater than $f_1(n)$ $ \forall n \geq 10000$. So, $f_2(n)$ is greater than $f_1(n)$.
