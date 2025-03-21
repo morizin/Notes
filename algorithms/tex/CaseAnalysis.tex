@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pgfmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage[a4paper, margin=0.8in]{geometry}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usetikzlibrary{calc}
+\usepackage{float}
+\usepackage{caption}
+
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
+
+\title{Case Analysis}
+\author{Mohammed Rizin \\ Unemployed}
+
+\date{\today}
+
+\newcommand{\drawArray}[2]{%
+    \newcount\arrayLength
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \coordinate (s) at (0, 0);
+            \def\found{0}
+            \arrayLength=0
+            \foreach \num [count=\i from 0] in {#1} {
+                \node[rectangle, draw, minimum size=6mm] at (s) {\num};
+                \ifnum\num=#2
+                    \node at ($(s)-(0,0.8)$) {$\underbrace{\i}_{key}$};
+                    \xdef\found{1}
+                \else
+                    \node at ($(s)-(0,0.5)$) {\i};
+                \fi
+                
+                \coordinate (s) at ($(s) + (0.6, 0)$);
+                \ifnum\found=0
+                \global\advance\arrayLength by 1
+                \fi
+            }
+            \ifnum\found=0
+                \node at ($0.45*(s) + (0, -1.0)$) {Not Found!};
+            \fi
+        \end{tikzpicture}
+        \caption{Searching for key = #2 after \the\arrayLength \text{ steps}}
+    \end{figure}
+}
+
+\begin{document}
+\maketitle
+
+\section{Linear Search Algorithm}
+\newcommand{\A}{8, 6, 12, 5, 9, 7, 4, 3, 16, 18}
+
+Suppose we have an array:
+
+\expandafter\drawArray\expandafter{\A}{3}
+
+\begin{algorithm}
+    \caption{Linear Search Algorithm}
+    \label{linear_search}
+    \begin{algorithmic}[1]
+        \Procedure{LinearSearch}{$A, n, x$}
+        \For {$i \gets 0$ to $n-1$}
+        \If {$A[i] = x$}
+        \State Return $i$
+        \EndIf
+        \EndFor
+        \State Return $-1$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\expandafter\drawArray\expandafter{\A}{0}
+
+Best Case $\Longrightarrow$ Searching key element is present at index 0.  Then it will take $O(1)$. \\
+Worst Case $\Longrightarrow$ Either the element is absent or its at last index. Then it will take $O(n)$. \\
+
+\end{document}
