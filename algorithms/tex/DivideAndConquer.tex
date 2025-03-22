@@ -1,6 +1,4 @@
-\documentclass{article}
-\usepackage{tikz}
-\usetikzlibrary{calc, positioning}
+\documentclass[]{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[a4paper, margin=0.8in]{geometry}
@@ -8,10 +6,12 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{algorithm}
-\usepackage{algpsuedocode}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning, arrows.meta, petri}
+\usepackage{algpseudocode}
 
 \setlength{\parskip}{1pt}
-\setlength{\parskip}{0em}
+\setlength{\parindent}{0em}
 
 \title{Divide And Conquer}
 \author{Mohammed Rizin \\ Unemployed}
@@ -20,5 +20,141 @@
 
 \begin{document}
 \maketitle
+\begin{abstract}
+    Suppose we got a bigger problem, call it $P$ of size $n$. Sometimes bigger problem are really daunting and we end up doing nothing. Instead, why don't we split the problem into multiple pieces. and solve them and combine the result. Its like we split the work into several pieces and assign to workers independently. So, each worker doesn't feel so hard about solving the problem. So we employ $DivideAndConquer$ strategy.
+\end{abstract}
+
+\section{Introduction}
+\begin{center}
+\begin{tikzpicture}[box/.style={rectangle, minimum size= 8mm, draw=black }, sibling distance = 2mm]
+    \node[box, scale=2] (root) {$\mathbb{P}$};
+    \node[box, scale=1.5, below left=10mm and 13mm of root] (p1) {$\mathbb{P}_1$};
+    \node[box, scale=1.5, right=of p1] (p2) {$\mathbb{P}_2$};
+    \node[box, scale=1.5, right=20mm of p2] (pk) {$\mathbb{P}_k$};
+    \node[scale=2] (dots) at ($(p2)!0.5!(pk)$) {...};
+
+    \node[box, scale=1.5, below=of p1] (s1) {$\mathbb{S}_1$};
+    \node[box, scale=1.5, below=of p2] (s2) {$\mathbb{S}_2$};
+    \node[box, scale=1.5, below=of pk] (sk) {$\mathbb{S}_k$};
+    \node[scale=2] (dots2) at ($(s2)!0.5!(sk)$) {...};
+
+    \node[box, scale=2, below right=10mm and 13mm of s1] (bigS) {$\mathbb{S}$};
+
+    \draw[->, very thick] (root.south) -- (p1.north);
+    \draw[->, very thick] (root.south) -- (p2.north);
+    \draw[->, thick] (root.south) -- (dots.north);
+    \draw[->, very thick] (root.south) -- (pk.north);
+
+    \draw[->, very thick] (p1.south) -- (s1.north);
+    \draw[->, very thick] (p2.south) -- (s2.north);
+    \draw[->, very thick] (pk.south) -- (sk.north);
+    \draw[->, thick] (dots.south) -- (dots2.north);
+
+    \draw[->, very thick] (s1.south) -- (bigS.north);
+    \draw[->, very thick] (s2.south) -- (bigS.north);
+    \draw[->, thick] (dots2.south) -- (bigS.north);
+    \draw[->, very thick] (sk.south) -- (bigS.north);
+
+\end{tikzpicture}
+\end{center}
+
+As discussed earlier, we are dividing a task into several pieces and solve them individually and independently. 
+
+\subsection{Conditions for Divide and Conquer}
+\begin{enumerate}
+    \item All the sub-problems should be the same task as the main problem.
+    \item There should be an known method to combine the solutions at least
+\end{enumerate}
+
+Since all the sub-problems are the same task as the parent problem, This is a recursive algorithm. 
+
+\subsection{Applications of Divide and Conquer}
+\begin{enumerate}
+    \item Binary search
+    \item Finding Minimum and Maximum
+    \item Merge Sort
+    \item Quick Sort
+    \item Stressen's Matrix Multiplication
+\end{enumerate}
+
+\section{Recurrence Relation}
+To analyze the time complexity of divide and conquer algorithms, we often use recurrence relations. For example:
+
+\begin{verbatim}
+void Test(int n){
+    if (n > 0){
+        printf("%d", n);
+        Test(n-1);
+    }
+}
+
+Test(3)
+\end{verbatim}
+
+
+\begin{center}
+    \begin{tikzpicture}[box/.style={rectangle, minimum size=8mm, draw=black}, 
+        sibling distance=2.5cm, 
+        level distance=2cm,
+        % edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode.north)}
+    ]
+        \node {Test(3)}
+        child { node {3} }
+        child { node {Test(2)}
+            child { node {2} }
+            child { node {Test(1)}
+                child { node {1} }
+                child { node {Test(0)}
+                    child{node {$\mathsf{X}$}
+                } 
+            }
+        }
+    };
+    \end{tikzpicture}
+\end{center}
+
+Since the only statement in the function is printf, which take $O(1)$ time, at each recursive step $O(1)$ is done. If $Test(n)$ is executed, the number of recursive calls are $n+1$, the number of printf calls are $n$.
+So the time complexity of this algorithm is $On(n)$
+
+This won't be possible in every algorithm to open the function and count them and make assumption about $n$ cases. Mathematically, That is not sufficient. Thus, Recurrence Relation Come into play.
+
+Lets take the same code we used before:
+
+\begin{algorithm}[H]
+    \caption{Simple Printing with recursion}
+    \label{printRecursion}
+    \begin{algorithmic}
+        \Procedure{Test}{int $n$} \Comment{Assume it takes $T(n)$}
+        \If{$n > 0$} 
+            \State$print(n)$ \Comment{$O(1)$}
+            \State$Test(n)$  \Comment{$T(n-1)$}
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+So,
+
+\[
+\begin{aligned}
+    T(n) &=
+    \begin{cases}
+        T(n - 1) + 1 \label{base} & n > 0, \\
+        1 & n = 0
+    \end{cases} \\
+    \because \hspace{10pt} T(n) &= T(n - 1) + 1, \\
+    T(n - 1) &= T(n - 2) + 1, \\
+    \text{Substituting} & \text{(3) in (1)}, \\
+    T(n) &= [T(n - 2) + 1] + 1 = T(n - 2) + 2, \\
+    T(n) &= [T(n - 3) + 1] + 2 = T(n - 3) + 3, \\
+    T(n) &= \hspace{7pt}\vdots \hspace{7pt}+\hspace{7pt} \vdots, \\
+    T(n) &= T(n - k) + k, \\
+    \because \hspace{10pt} T(0) &= 1, \\
+    \text{if (k = n)}, \\
+    T(n) &= T(0) + n, \\
+    T(n) &= 1 + n.\\
+    \text{This algorithm is} & \text{ O(n)}
+\end{aligned}
+\]
 
 \end{document}
