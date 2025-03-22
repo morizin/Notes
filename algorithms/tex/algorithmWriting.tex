@@ -5,6 +5,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{makeidx}
+\makeindex
 
 \title{How to Write and Analyze an Algorithm}
 \author{Mohammed Rizin \\ Unemployed}
@@ -14,6 +16,7 @@
 \maketitle
 
 \section{How to Write an algorithm}
+\index{Writing an algorithm}
 \noindent
 \begin{algorithm}
 \caption{Swapping two numbers}\label{swap}
@@ -28,8 +31,8 @@
 
 We can write algorithm in any format. The intent behind writing an algorithm is to make it easy for the programmer to quickly understand it and make it into program.
 
-\section{How to Analyze an algorithm?}
-\subsection{Criteria for Analyzing an algorithm}
+\section{How to Analyze an algorithm?}\index{Analyzing an algorithm}
+\subsection{Criteria for Analyzing an algorithm} \index{Criterias}
 \begin{enumerate}
 \item \textbf{Time Complexity :} \\
 This is the most important criteria for analyzing an algorithm. It is the measure of the amount of time taken by an algorithm to run as a function of the length of the input. It is denoted by $T(n)$, where $n$ is the size of the input. This is not the actual time taken by the algorithm to run, but a Time Function.
