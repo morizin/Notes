@@ -208,41 +208,50 @@ Lets look Another example
         \Procedure{Test}{int $n$} \Comment{Assume it takes $T(n)$}
         \If{$n > 0$} 
             \For{$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $2 \cdot i$} \Comment{This is $\log(n) + 1, We can also calculate without taking this into consideration$ }
-                \State$print(n)$ \Comment{Everything inside for will be $T(n) = n$}
+                \State$print(n)$ \Comment{This takes$ \log{n}$}
             \EndFor
-            \State$Test(n-1)$  \Comment{$T(n-1)$}
+            \State$Test(n-1)$  \Comment{$T(n-1)$} 
         \EndIf
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
 
-So,
+Although I know we excluded many of the time complexties simply because we wont using it in asymtotic equation
 
-\[
-\begin{aligned}
-    T(n) &= T(n - 1) + 2n + 2\\
-    \text{We need to take Asymptotic Notation}\\
-    T(n) &\simeq  T(n - 1) + n\\
+\begin{align*}
+    \text{After taking Asymptotic Notation}\\
+    T(n) &= T(n - 1) + \log{n} \tag{1} \label{base}\\
     T(n) &=
     \begin{cases}
-        T(n - 1) + n \label{base} & n > 0, \\
+        T(n - 1) + \log{n} & n > 0, \\
         1 & n = 0
-    \end{cases} \\
-    \because \hspace{10pt} T(n) &= T(n - 1) + n, \\
-    T(n - 1) &= T(n - 2) + n - 1, \\
-    \text{Substituting} & \text{(3) in (1)}, \\
-    T(n) &= [T(n - 2) + n - 1] + n = T(n - 2) + (n-1) + n, \\
-    T(n) &= [T(n - 3) + n - 2] + (n-1) + n = T(n - 3) + (n-2) + (n-1) + n, \\
-    T(n) &= \hspace{7pt}\vdots \hspace{7pt}+\hspace{7pt} \vdots, \\
-    T(n) &= T(n - k) + (n-(k - 1 )) + \cdots + (n-1) + n, \\
+    \end{cases} \tag{2} \\  
+    \because \hspace{10pt} T(n) &= T(n - 1) + \log{n}  \\
+    T(n - 1) &= T(n - 2) + \log{(n - 1)} \tag{3} \label{downStep}\\
+    \text{Substituting} & \text{eqn } (\ref{downStep}) \text{ in } (\ref{base}),  \\
+    T(n)&= [T(n - 2) + \log(n - 1)] + \log(n)\\ 
+        &= T(n - 2) + \log(n-1) + \log{n}\\ &= T(n-2) + \log (n^2-n), \\
+    T(n)&= [T(n - 3) + n - 2] + (n-1) + n \\
+        &= T(n - 3) + \log(n-2) + \log(n-1) + \log n\\
+        &= T(n-3) + \log ((n-2) \cdot (n-1) \cdot(n)) \\
+    T(n) &= T(n-k) + \log{\left(\prod_{i=0}^{k-1} (n-i) \right)} \label{kSteps} \tag{4}\\
+    T(n) &= T(n-k) + \log \left(\frac{n!}{n-(k-2)!}\right)\\
     \because \hspace{10pt} T(0) &= 1, \\
     \text{if (k = n)}, \\
-    T(n) &= T(0) + \frac{n(n+1)}{2} = 1 + \frac{n(n+1)}{2}, \\
-    T(n) &\approx \frac{n(n+1)}{2}  \approx \frac{n^2+n}{2}\\
-    \text{This algorithm is} & \text{ $O(n^2$)}
-\end{aligned}
-\]
-
-
+    T(n) &= T(0) + \log \left( \frac{n!}{2}\right) = 1 + \cdot \left( \frac{n!}{2}\right) \\
+    T(n) &\approx \log{n!}  \approx \log{n!}\\
+    \text{Upper bound of }& \log{n!}  \text{ is }O(n \cdot \log{n})\\
+    \text{This algorithm is } & O(n \cdot \log{n})\\
+    OR & \\
+    \text{From eqn (\ref{kSteps})}:\\
+    T(n) &= T(n-k) + \log{\left(\prod_{i=0}^{k-1} (n-i) \right)}\\
+    \text{By Binomial Theorem, }\\
+    T(n) &= T(n-k) + \log{(n^k + \cdots) }\\
+    T(n) &\approx T(n-k) + k \cdot \log {n}\\
+    \because \hspace{10pt} T(0) &= 1, \\
+    \text{if (k = n)}, \\
+    T(n) &= T(0) + n \cdot log{n}\\
+    \text{This algorithm is } & O(n \cdot \log{n})
+\end{align*}
 
 \end{document}
