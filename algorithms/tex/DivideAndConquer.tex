@@ -418,6 +418,7 @@ Lets see some examples:
             \State$print(n)$ \Comment{$O(n)$}
             \EndFor
             \State$Test(n/2)$  \Comment{$T(n/2)$}
+            \State$Test(n/2)$  \Comment{$T(n/2)$}
         \EndIf 
         \EndProcedure
         \Comment {$T(n) = T(\frac{n}{2}) + 1$}
@@ -510,7 +511,7 @@ If we add the time in each level:\\
         T(n) =  
         \begin{cases}
             1 & n = 1\\
-            T(n/2) + n & n > 1 \\
+            2T(n/2) + n & n > 1 \\
         \end{cases}
     \end{equation}
     The equation (\ref{timeFunc}) after k step would have $\frac{n}{2^k}$, and there would be k leafs in the tree.
@@ -525,6 +526,32 @@ If we add the time in each level:\\
     So the total time $T(n) = n\cdot \log{n}$\\
     So this algorithm have $O(n\cdot \log{n})$
 \end{proof}
+
+Let's Solve it by Recurrence Relation: 
+
+When we look at equation \ref{timeFunc}, 
+\begin{align*}
+    T(n) &= 2\cdot T\left(\frac{n}{2}\right) + n \tag{1} \label{base}\\ 
+    T\left(\frac{n}{2}\right) &= 2\cdot T\left(\frac{n}{2} \cdot \frac{n}{2}\right) + \frac{n}{2} = 2\cdot T\left(\frac{n}{2^2}\right) + \frac{n}{2} \tag{2} \label{halfTime}
+    \\
+    \text {Substituting equation } &\text{(\ref{halfTime}) in (\ref{base})}\\
+    T(n) &= 2\cdot [2\cdot T\left(\frac{n}{2^2}\right) + \frac{n}{2} ] + n\\
+    T(n) &= 2^2\cdot T\left(\frac{n}{2^2}\right) + n  + n \tag{3} \label{eqn2}\\
+    \text{Further if we find } &T\left(\frac{n}{2^2}\right)\\
+    T(n) &= 2^3\cdot T\left(\frac{n}{2^3}\right) + 3n \tag{3} \label{eqn2}\\
+    T(n) &= \vdots  + \vdots \text { After k steps} \\ 
+    T(n) &= 2^k \cdot T\left(\frac{n}{2^k}\right) + kn \tag{4} \label{eqnk}\\
+    \text{Assume } \frac{n}{2^k} &= 1\\
+    n &= 2^k \tag{5} \label{n_value}\\ 
+    k &= \log_2{n} \tag{6} \label{k_value} \\
+    \text{Subtituting  (\ref{k_value})}& \text{(\ref{n_value}) in equation (\ref{eqnk})}\\
+    T(n) &= n \cdot T(1) + n\cdot \log{n}\\
+    T(n) &= n + n\cdot \log{n}\\
+    \text{So the algorithm has } &\text{a time complexity of } O(n\log n)
+\end{align*}
+
+\section{Master's Theorem for Dividing Functions}
+
 
 
 
