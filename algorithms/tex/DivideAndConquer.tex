@@ -5,6 +5,7 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{graphicx}
+\usepackage{amsthm}
 \usepackage{algorithm}
 \usepackage{tikz}
 \usetikzlibrary{calc,positioning, arrows.meta, petri}
@@ -13,10 +14,15 @@
 \setlength{\parskip}{1pt}
 \setlength{\parindent}{0em}
 
+
 \title{Divide And Conquer}
 \author{Mohammed Rizin \\ Unemployed}
 
 \date{\today}
+
+% \theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Example}[thm]
 
 \begin{document}
 \maketitle
@@ -153,13 +159,13 @@ So,
     \text{if (k = n)}, \\
     T(n) &= T(0) + n, \\
     T(n) &= 1 + n.\\
-    \text{This algorithm is} & \text{ O(n)}
+    \text{This algorithm is } & O(n)
 \end{aligned}
 \]
 
 Lets look Another example
 \begin{algorithm}[H]
-    \caption{Simple Printing with recursion}
+    \caption{Recursion with simple For Loop}
     \label{printRecursion}
     \begin{algorithmic}
         \Procedure{Test}{int $n$} \Comment{Assume it takes $T(n)$}
@@ -196,19 +202,19 @@ So,
     \text{if (k = n)}, \\
     T(n) &= T(0) + \frac{n(n+1)}{2} = 1 + \frac{n(n+1)}{2}, \\
     T(n) &\approx \frac{n(n+1)}{2}  \approx \frac{n^2+n}{2}\\
-    \text{This algorithm is} & \text{ $O(n^2$)}
+    \text{This algorithm is } & O(n^2)
 \end{aligned}
 \]
 
 Lets look Another example
 \begin{algorithm}[H]
-    \caption{Simple Printing with recursion}
+    \caption{Recursion with for loop \textbf{Step = $2 \cdot i$} }
     \label{printRecursion}
     \begin{algorithmic}
         \Procedure{Test}{int $n$} \Comment{Assume it takes $T(n)$}
         \If{$n > 0$} 
-            \For{$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $2 \cdot i$} \Comment{This is $\log(n) + 1, We can also calculate without taking this into consideration$ }
-                \State$print(n)$ \Comment{This takes$ \log{n}$}
+            \For{$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $2 \cdot i$} \Comment{This is $\log(n) + 1$ Not useful. }
+                \State$print(n)$ \Comment{This takes $ \log{n}$}
             \EndFor
             \State$Test(n-1)$  \Comment{$T(n-1)$} 
         \EndIf
@@ -216,7 +222,7 @@ Lets look Another example
     \end{algorithmic}
 \end{algorithm}
 
-Although I know we excluded many of the time complexties simply because we wont using it in asymtotic equation
+Although I know we excluded many of the time complexities simply because we wont using it in asymptotic equation
 
 \begin{align*}
     \text{After taking Asymptotic Notation}\\
@@ -228,7 +234,7 @@ Although I know we excluded many of the time complexties simply because we wont 
     \end{cases} \tag{2} \\  
     \because \hspace{10pt} T(n) &= T(n - 1) + \log{n}  \\
     T(n - 1) &= T(n - 2) + \log{(n - 1)} \tag{3} \label{downStep}\\
-    \text{Substituting} & \text{eqn } (\ref{downStep}) \text{ in } (\ref{base}),  \\
+    \text{Substituting eqn } (\ref{downStep}) \text{ in } (\ref{base}),  \\
     T(n)&= [T(n - 2) + \log(n - 1)] + \log(n)\\ 
         &= T(n - 2) + \log(n-1) + \log{n}\\ &= T(n-2) + \log (n^2-n), \\
     T(n)&= [T(n - 3) + n - 2] + (n-1) + n \\
@@ -254,4 +260,140 @@ Although I know we excluded many of the time complexties simply because we wont 
     \text{This algorithm is } & O(n \cdot \log{n})
 \end{align*}
 
-\end{document}
+    By observing above examples, we can observe that for any decreasing recurrence relation function i.e. ($T(n) = T\underbrace{(n-1)}_{Decreasing} + anything$) is O($n \cdot anything$)
+
+$T(n) = T(n-2) + 1 = 1 + \frac{n}{2} \longrightarrow O(n) $
+
+$T(n) = T(n-100) + n = 1 + \frac{n(n+1)}{200} \longrightarrow O(n^2) $
+\\\\
+\textbf{But what if $T(n) = 2 \cdot T(n -1) + 1$ :}
+\begin{algorithm}[H]
+    \caption{Multiple Recursion}
+    \label{printRecursion}
+    \begin{algorithmic}
+        \Procedure{Test}{int $n$} \Comment{Assume it takes $T(n)$}
+        \If{$n > 0$} 
+            \State$print(n)$ \Comment{$O(1)$}
+            \State$Test(n-1)$  \Comment{$T(n-1)$}
+            \State$Test(n-1)$  \Comment{$T(n-1)$}
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{center}
+    \begin{tikzpicture}[
+        box/.style={rectangle, draw=green!60, fill=green!5, minimum size=8mm, draw=black}, 
+        level distance=1.2cm, % Adjusted for balance
+        sibling distance=3cm % Prevents overlap
+    ]
+        \node[box] {T(n)}
+            child { node[box] {T(n-1)}
+                child { node[box] {T(n-2)}
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                }
+                child { node[box] {T(n-2)}
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                }
+            }
+            child { node[box] {T(n-1)}
+                child { node[box] {T(n-2)}
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                }
+                child { node[box] {T(n-2)}
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                    child { node[box] {T(n-3)}
+                        child { node[box] {T(n-4)} }
+                        child { node[box] {T(n-4)} }
+                    }
+                }
+            };
+    \end{tikzpicture}
+\end{center}
+
+The algorithm time depends on the number of level. At a certain level k the time taken is $2^k$. Then 
+$T(n) = 2^0 + 2^1 + 2^2 + \cdots + 2^k = 2^{k+1} - 1 $
+
+Assume $n = k$,
+Then it is $2^{n+1} - 1$. That is $O(2^n)$.
+\[
+\begin{aligned}
+    T(n) &=
+    \begin{cases}
+        2\cdot T(n - 1) + 1 \label{base} & n > 0, \\
+        1 & n = 0
+    \end{cases} \\
+    \because \hspace{10pt} T(n) &= T(n - 1) + 1, \\
+    T(n - 1) &= 2\cdot T(n - 2) + 1, \\
+    \text{Substituting} & \text{(3) in (1)}, \\
+    T(n) &= 2\cdot[2 \cdot T(n - 2) + 1] + 1 = 4 \cdot T(n - 2) + 3, \\
+    T(n) &= 4\cdot[2 \cdot T(n - 3) + 1] + 3 = 8 \cdot T(n - 3) + 7, \\
+    T(n) &= \hspace{7pt}\vdots \hspace{7pt}+\hspace{7pt} \vdots, \\
+    T(n) &= 2^k \cdot T(n - k) + 2^k - 1, \\
+    \because \hspace{10pt} T(0) &= 1, \\
+    \text{if (k = n)}, \\
+    T(n) &= 2^n \cdot T(0) + 2^n - 1, \\
+    T(n) &= 2^{n+1} - 1.\\
+    \text{This algorithm is } & O(2^n)
+\end{aligned}
+\]
+
+\section{Master Theorem for Decreasing}
+\begin{thm}
+    If $T(n) = a \cdot T(n-1) + f(n)$ where $a > 0$, $b > 0$, and $f(n) = O(n^k)$ where $k \geq 0$, then:
+    \[
+    \begin{cases}
+        O(n^{k}) \text{ or } O(f(n)) & \text{if } 0 < a < 1, \\
+        O(n^{k+1}) \text{ or } O(n \cdot f(n)) & \text{if } a = 1, \\
+        O(n^{k} \cdot a^{\frac{n}{b}}) \text{ or } O(a^{\frac{n}{b}} \cdot f(n)) & \text{if } a > 1.
+    \end{cases}
+    \]
+\end{thm}
+
+\begin{lem}
+$T(n) = T(n - 1) + 1 \rightarrow O(n)$
+\end{lem}
+
+\begin{lem}
+    $T(n) = T(n - 1) + n \rightarrow O(n^2)$
+\end{lem}
+
+\begin{lem}
+    $T(n) = T(n - 1) + \log{n} \rightarrow O(n\cdot \log{n})$
+\end{lem}
+
+\begin{lem}
+    $T(n) = 2\cdot T(n - 1) + 1 \rightarrow O(2^n)$
+\end{lem}
+
+\begin{lem}
+    $T(n) = 2\cdot T(n - 1) + 1 \rightarrow O(3^n)$
+\end{lem}
+\begin{lem}
+    $T(n) = 3\cdot T(n - 1) + n \rightarrow O(n\cdot 3^n)$
+\end{lem}
+\end{document} 
