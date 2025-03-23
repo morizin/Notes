@@ -10,6 +10,8 @@
 \usepackage{tikz}
 \usetikzlibrary{calc,positioning, arrows.meta, petri}
 \usepackage{algpseudocode}
+\usepackage{chngcntr}
+\counterwithin{algorithm}{section}
 
 \setlength{\parskip}{1pt}
 \setlength{\parindent}{0em}
@@ -21,7 +23,7 @@
 \date{\today}
 
 \theoremstyle{plain}
-\newtheorem{thm}{Theorem}
+\newtheorem{thm}{Theorem}[section]
 \theoremstyle{definition}
 \newtheorem{lem}{Example}[thm]
 
@@ -397,4 +399,133 @@ $T(n) = T(n - 1) + 1 \rightarrow O(n)$
 \begin{lem}
     $T(n) = 3\cdot T(n - 1) + n \rightarrow O(n\cdot 3^n)$
 \end{lem}
+
+\section{Recurrence Relation in Dividing Function.}
+So far we have seen decreasing function and master theorem for decreasing function as well. But what if the value is down by a ratio inside the same function. 
+
+If the ratio $r$ is greater than or equal to 1 then This function would go infinity (i.e. we multiply it with positive ratio, and the value never stops). So we use a ratio that $0 < r < 1$, i.e. we divide by some value.
+
+Lets see some examples:
+\begin{lem}
+\textbf{$T(n) = 2 \cdot T(n -1) + 1$ :}
+\begin{algorithm}[H]
+    \caption{Recursion with Division}
+    \label{SimpleDivisionRecursion}
+    \begin{algorithmic}
+        \Procedure{Test}{int $n$} \Comment{$T(n)$}
+        \If{$n > 0$} 
+            \For{$i \gets 0$ \textbf{to} $n-1$} 
+            \State$print(n)$ \Comment{$O(n)$}
+            \EndFor
+            \State$Test(n/2)$  \Comment{$T(n/2)$}
+        \EndIf 
+        \EndProcedure
+        \Comment {$T(n) = T(\frac{n}{2}) + 1$}
+    \end{algorithmic}
+\end{algorithm}
+\end{lem}
+
+Let us draw the tree:
+In this tree we are only including the time taken for the purpose of viewing it
+
+\begin{center}
+    \begin{tikzpicture}[
+        box/.style={rectangle, draw=green!60, fill=green!5, minimum size=4mm, draw=black}, 
+        level distance=1.2cm, % Adjusted for balance
+        sibling distance=2cm % Prevents overlap
+    ]
+        \node[box] {n}
+            child { node[box] {$\frac{n}{2^1}$}
+                child { node[box] {$\frac{n}{2^2}$}
+                    child { node[box] {$\frac{n}{2^3}$}
+                        child { node[box] {$\frac{n}{2^4}$} }
+                        child { node[box] {$\frac{n}{2^4}$} }
+                    }
+                    child { node[box] {$\frac{n}{2^3}$}
+                        child { node[box] {$\frac{n}{2^4}$} }
+                        child { node[box] {$\frac{n}{2^4}$} }
+                    }
+                }
+                child { node[box] {$\frac{n}{2^2}$}
+                    child { node[box] {$\frac{n}{2^3}$}
+                        edge from parent [double]
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                    }
+                    child { node[box] {$\frac{n}{2^3}$}
+                        edge from parent [double]
+                        child { node[box] {$\frac{n}{2^4}$} edge from parent [double]
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                    }
+                }
+                }}
+            child { node[box] {$\frac{n}{2^1}$}
+                child { node[box] {$\frac{n}{2^2}$}
+                    child { node[box] {$\frac{n}{2^3}$}
+                        edge from parent [double]
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                    }
+                    child { node[box] {$\frac{n}{2^3}$}
+                        edge from parent [double]
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                        child { node[box] {$\frac{n}{2^4}$} 
+                        edge from parent [double]}
+                    }
+                }
+                child { node[box] {$\frac{n}{2^2}$}
+                    child { node[box] {$\frac{n}{2^3}$}
+                        child { node[box] {$\frac{n}{2^4}$} }
+                        child { node[box] {$\frac{n}{2^4}$} }
+                    }
+                    child { node[box] {$\frac{n}{2^3}$}
+                        child { node[box] {$\frac{n}{2^4}$} }
+                        child { node[box] {$\frac{n}{2^4}$} }
+                    }
+                }
+            };
+    \end{tikzpicture}
+\end{center}
+
+If we add the time in each level:\\ 
+\begin{flalign*}
+\text{Level 1 : }&n \\
+\text{Level 2 : }&\frac{n}{2} + \frac{n}{2} = n \\
+\text{Level 3 : }&\frac{n}{4} + \frac{n}{4} + \frac{n}{4} + \frac{n}{4} = n \\
+\text{Level 4 : }&\frac{n}{8} + \frac{n}{8} + \frac{n}{8} + \frac{n}{8} + \frac{n}{8} + \frac{n}{8} + \frac{n}{8} + \frac{n}{8} = n\\
+\end{flalign*}
+
+
+
+\begin{proof}[Lets Solve it!]
+    As we go down we find that at each level it takes $n$ time.
+    The Time Function of this algorithm is :
+    \begin{equation}\label{timeFunc}
+        T(n) =  
+        \begin{cases}
+            1 & n = 1\\
+            T(n/2) + n & n > 1 \\
+        \end{cases}
+    \end{equation}
+    The equation (\ref{timeFunc}) after k step would have $\frac{n}{2^k}$, and there would be k leafs in the tree.
+    As this tree goes on and on. Finally, it will terminate after T(1). 
+    Assume $T(\frac{n}{2^k}) = T(1)$
+    \begin{align*}
+        \frac{n}{2^k} &= 1\\
+        n &= 2^k\\
+        k &= \log_2{n}
+    \end{align*}
+    So, the total height of the tree is $\log{n}$ and the time taken in each level is n. \\
+    So the total time $T(n) = n\cdot \log{n}$\\
+    So this algorithm have $O(n\cdot \log{n})$
+\end{proof}
+
+
+
 \end{document} 
