@@ -200,4 +200,49 @@ So,
 \end{aligned}
 \]
 
+Lets look Another example
+\begin{algorithm}[H]
+    \caption{Simple Printing with recursion}
+    \label{printRecursion}
+    \begin{algorithmic}
+        \Procedure{Test}{int $n$} \Comment{Assume it takes $T(n)$}
+        \If{$n > 0$} 
+            \For{$i \gets 0$ \textbf{to} $n-1$ \textbf{step} $2 \cdot i$} \Comment{This is $\log(n) + 1, We can also calculate without taking this into consideration$ }
+                \State$print(n)$ \Comment{Everything inside for will be $T(n) = n$}
+            \EndFor
+            \State$Test(n-1)$  \Comment{$T(n-1)$}
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+So,
+
+\[
+\begin{aligned}
+    T(n) &= T(n - 1) + 2n + 2\\
+    \text{We need to take Asymptotic Notation}\\
+    T(n) &\simeq  T(n - 1) + n\\
+    T(n) &=
+    \begin{cases}
+        T(n - 1) + n \label{base} & n > 0, \\
+        1 & n = 0
+    \end{cases} \\
+    \because \hspace{10pt} T(n) &= T(n - 1) + n, \\
+    T(n - 1) &= T(n - 2) + n - 1, \\
+    \text{Substituting} & \text{(3) in (1)}, \\
+    T(n) &= [T(n - 2) + n - 1] + n = T(n - 2) + (n-1) + n, \\
+    T(n) &= [T(n - 3) + n - 2] + (n-1) + n = T(n - 3) + (n-2) + (n-1) + n, \\
+    T(n) &= \hspace{7pt}\vdots \hspace{7pt}+\hspace{7pt} \vdots, \\
+    T(n) &= T(n - k) + (n-(k - 1 )) + \cdots + (n-1) + n, \\
+    \because \hspace{10pt} T(0) &= 1, \\
+    \text{if (k = n)}, \\
+    T(n) &= T(0) + \frac{n(n+1)}{2} = 1 + \frac{n(n+1)}{2}, \\
+    T(n) &\approx \frac{n(n+1)}{2}  \approx \frac{n^2+n}{2}\\
+    \text{This algorithm is} & \text{ $O(n^2$)}
+\end{aligned}
+\]
+
+
+
 \end{document}
