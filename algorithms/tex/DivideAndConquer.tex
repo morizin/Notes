@@ -671,8 +671,50 @@ If $\log_b{a} < k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ insignific
 If $\log$ term is in denominator, then we consider it to be negligible. i.e. $\Theta({n^k})$.
 
 \section{Recurrence Relation for Root Function}
+\textbf{$T(n) = T(\sqrt{n}) + 1$ :}
+\begin{algorithm}[H]
+    \caption{Recursion with Root}
+    \label{SimpleRootRecursion}
+    \begin{algorithmic}
+        \Procedure{Test}{int $n$} \Comment{$T(n)$}
+        \If{$n > 2$} 
+            \State$print(n)$ \Comment{$O(1)$}
+            \State$Test(\sqrt{n})$  \Comment{$T(\sqrt{n})$}
+        \EndIf 
+        \EndProcedure
+        \Comment {$T(n) = T(\sqrt{n}) + 1$}
+    \end{algorithmic}
+\end{algorithm}
 
+\begin{align*}
+    \text{After taking Asymptotic Notation}\\
+    T(n) &= T(\sqrt{n}) + 1 \tag{1} \label{base}\\
+    T(n) &=
+    \begin{cases}
+        T(\sqrt{n}) + 1 & n > 2, \\
+        1 & n = 2
+    \end{cases} \tag{2} \\  
+    \because \hspace{10pt} T(n) &= T(\sqrt{n}) + 1  \\
+    T(n^{\frac{1}{2}}) &= T(n^{\frac{1}{2^2}}) + 1 \tag{3} \label{downStep}\\
+    \text{Substituting eqn } (\ref{downStep}) \text{ in } (\ref{base}),  \\
+    T(n)&= [T(n^{\frac{1}{2^2}}) + 1] + 1\\ 
+        &= T(n^{\frac{1}{2^2}}) + 2\\
+    T(n)&= [T(n^{\frac{1}{2^3}}) + 1] + 2 \\
+        &= T(n^{\frac{1}{2^3}}) + 3\\
+    T(n) &= T(n^{\frac{1}{2^k}}) + k \label{kSteps} \tag{4}\\
+    \because \hspace{10pt} T(2) &= 1, \\
+    \text{From eqn (\ref{kSteps})}:\\
+    T(n) &= T(n^{\frac{1}{2^k}}) + k\\
+    \text{Asumme n is powers of 2 }, n = 2^m\\
+    T(2^m) &= T(2^{\frac{m}{2^k}}) + k\\
+    Assume \hspace{10pt} 2^1 &= 2^{\frac{m}{2^k}}\\
+    1 &= \frac{m}{2^k} \rightarrow m = 2^k\\
+    k &= \log_2{m}\\
+    m = \log_2{n} \rightarrow k &= \log_2{\log_2{n}}\\
+    \text{This algorithm is } & O(\log{\log{n}})
+\end{align*}
 
+Additionally, You can use the Master's Theorem for Dividing Funciton to solving the above problem.
 
 \section{Conclusion}
 So, if we have a decreasing function $T(n) = T(n - b) + f(n)$. The term $T(n - b)$ which has $O(n)$ time complexity. The total time complexity will be multiplication of time complexities of both the terms. 
@@ -680,6 +722,9 @@ So, if we have a decreasing function $T(n) = T(n - b) + f(n)$. The term $T(n - b
 \\
 if there is coefficient for the first term, the time complexity will no longer be just n, going down each level, the time is doubling from the previous term. 
 If b > 1, only some values under $n$ will be explored. The number of steps would be $\frac{n}{b}$. if a > 1, the doubling happen only $\frac{n}{b}$ times. 
+\\
+But what if a < 1, the first term would add up to 1, according to geometric progression. Time Complexity of second term would be dominant than first or the first term would become 1 as n goes to infinity. $1 \cdot f(n)$ would gives us the total time complexity would be $O(f(n))$.
+So In general it is the time take taken by first term multiplied by the time taken by second term.
 \\
 \\
 If $\log_b{a} > k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ dominates the growth of the recurrence relation ($n^{\log_a{b}}$), as it contributes a higher asymptotic degree compared to $f(n) = O(n^k)$. Consequently, the time complexity of the recurrence is determined by the dominant term, resulting in $T(n) = \Theta(n^{\log_b{a}})$.
@@ -698,6 +743,8 @@ If $\log_b{a} = k$ and $\log{n}$ with power $> 1$ in the denominator, then it de
 If $\log_b{a} < k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ insignificant to the growth of the recurrence relation. $f(n)$ will contribute higher asymptotic degree compared to former term. Consequently, the time complexity of the recurrence is determined by the dominant term, resulting in $T(n) = \Theta(f(n))$ as long as $\log$ term in the numerator. i.e. just take the second term. 
 
 If $\log$ term is in denominator, then we consider it to be negligible. i.e. $\Theta({n^k})$.
+
+So In general it is the time take taken by dominant term.
 
 
 \end{document} 
