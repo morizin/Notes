@@ -1,0 +1,232 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{algorithm}
+\usepackage{jcappub}
+\usepackage{algpseudocode}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{chngcntr}
+\usepackage{array}
+% \usepackage{listings}
+\usepackage{minted}
+\usepackage{xcolor}
+
+\setlength{\parindent}{0em}
+\title{Binary Search}
+\author[1]{Mohammed Rizin \note{He's amazing}}
+\affiliation[1]{Unemployed, GitHub Accounts}
+
+\emailAdd{mrizin2013@gmail.com}
+\arxivnumber{2434.3253}
+
+\keywords{binary, search, algorithm, data structures}
+\date{\today}
+
+\abstract{Binary Search is efficient Searching algorithm. }
+\dedicated{Dedicated to Just myself}
+% \notoc
+
+\newcommand{\drawArray}[2]{%
+    \newcount\arrayLength
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \coordinate (s) at (0, 0);
+            \def\found{0}
+            \arrayLength=0
+            \foreach \num [count=\i from 0] in {#1} {
+                \node[rectangle, draw, minimum size=8mm] at (s) {\num};
+                \ifnum\num=#2
+                    \node at ($(s)-(0,1.1)$) {$\underbrace{\i}_{key}$};
+                    \xdef\found{1}
+                \else
+                    \node at ($(s)-(0,0.8)$) {\i};
+                \fi
+                
+                \coordinate (s) at ($(s) + (0.8, 0)$);
+                \ifnum\found=0
+                \global\advance\arrayLength by 1
+                \fi
+            }
+            \ifnum\found=0
+                \node at ($0.45*(s) + (0, -1.0)$) {Not Found!};
+            \fi
+        \end{tikzpicture}
+        \caption{Searching for key = #2 after \the\arrayLength \text{ steps}}
+    \end{figure}
+}
+\notoc 
+
+
+\begin{document}
+\maketitle
+\section{Binary Search Algorithm.}\label{intro}
+
+
+Earlier we learned about Divide and Conquer Method and discussed about calculating recurrence relation. In this we would be exploring Binary Search and we will code them in two methods : Iterative and Recursive Method.
+
+Let us consider this array
+\def\A{1, 2, 4, 5, 7, 23, 23, 34, 44, 51, 54}
+
+\expandafter\drawArray\expandafter{\A}{7}
+
+\subsection{Algorithm : Interatively}
+\begin{algorithm}[H]
+    \caption{Binary Search Algorithm : Iterative}
+    \label{binarySearchrec}
+    \begin{algorithmic}
+        \Procedure{BinarySearch}{$A, n, key$}
+            \State $l \gets 0$
+            \State $h \gets n$
+        \While {$l \leq h$}
+            \State $mid \gets \left(\frac{l + h}{2}\right)$
+            \If {$key = A[mid]$}
+                \State Return $mid$
+            \EndIf
+            \If {$key > A[mid]$}
+                \State $l \leftarrow mid - 1$
+            \Else 
+                \State $h \leftarrow mid + 1$
+            \EndIf
+        \EndWhile
+        \State Return $-1$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+Let me explain this in detail.
+At first we set low and high pointer. We calculate the mid point of this and take floor value of it. If A[mid] is what we looking for then the procedure terminates and Returns the key. else. We will check if the key belong to right hand side of mid point value ( as the array is already sorted ) or left hand side and expand search only to that side. Doing this Interatively would give us a value of key if found else it will give not Found.
+
+The Time Complexities :\\
+If the searching value is the midpoint of the array
+\boxed{O_{min}{(n)} =  1}\\
+
+If the searching value is at the leaf node tree of Binary Search
+\boxed{O_{max}{(n)} =  \log {n} }\\ which is the height of the tree and that would be the number of comparisons\\ 
+
+
+\begin{minted}{python3}
+    def binarySearch(A: list, key: int) -> int:
+        low = 0
+        n = len(A)
+        high = n - 1
+        while (low <= high):
+            mid = (low + high)//2
+            if A[mid] == key:
+                return mid
+            elif key > A[mid]:
+                low = mid + 1 
+            else:
+                high = mid - 1
+        return -1
+    \end{minted}
+
+\subsection{Algorithm : Recursively}
+\begin{algorithm}[H]
+    \caption{Binary Search Algorithm : Recursive}
+    \label{binarySearchrec}
+    \begin{algorithmic}
+        \Procedure{BinarySearch}{$l, h, key$}
+            \If {$l == h$}
+                \If {$key = A[l]$}
+                    \State Return $l$
+                \Else
+                    \State Return $-1$
+                \EndIf
+            \Else 
+                \State $mid \gets \left(\frac{l + h}{2}\right)$
+                \If {$key = A[mid]$}
+                    \State Return $mid$
+                \EndIf
+                \If {$key > A[mid]$}
+                    \State $BinarySearch(mid + 1, h, key)$
+                \Else
+                    \State $BinarySearch(l, mid - 1, key)$ 
+                \EndIf
+            \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+To Build a recursive algorithm (aka. Divide and Conquer), we need to know what is a small problem. Of course, a small problem should of same task as the parent problem. But we need the smallest problem to which we know answer of. 
+In this case, if $l == h$ is true, we know how to solve this case if $A[l] == key$ Then that's the element we looking for, else Not Found. If the problem still need to get break it down, then do the Binary search on the broken problem. If we calculate the Time Complexity:
+
+\begin{algorithmic}
+    \If {$key > A[mid]$}
+        \State $BinarySearch(mid + 1, h, key)$
+    \Else
+        \State $BinarySearch(l, mid - 1, key)$ 
+    \EndIf
+\end{algorithmic}
+
+\bigskip
+\textbf{?`What is the Time taken for small problem?} \\
+\begin{algorithmic}
+    \If {$l == h$}
+        \If {$key = A[l]$}
+            \State Return $l$
+        \Else
+            \State Return $-1$
+        \EndIf
+    \EndIf
+\end{algorithmic}
+
+Since all of them take constant amount of time, this is $O(1)$
+
+Since this is a $If$ statement, only one of recursive function work which is of Complexity : $T(\frac{n}{2})$.
+Along with some more constant statement which adds to $T(n) = T(\frac{n}{2}) + 1$
+Then the function would be : 
+\begin{equation}\label {recurrenceRelation}
+    T(n) = 
+    \begin{cases}
+        1 & n \\
+        T\left(\frac{n}{2}\right) + 1 & n > 1
+    \end{cases}
+\end{equation}
+
+According to Masters Theorem of Dividing Function:
+\begin{align*}
+    a = 1 & b = 2\\
+    \log_b{a} = 0 & k = 0\\
+    \text{Since } \log_b{a} &= k = 0 \text{ and } p = 0\\
+    \text{Then } &T(n) \text{ is } O(\log{n})\\
+\end{align*}
+
+Here's the Python Code:
+\begin{minted}{python3}
+def recursiveBinary(A: list, key: int, offset : int = 0) -> int:
+    n = len(A)
+    if n == 0:
+        return -1
+    mid = n//2
+    if A[mid] == key:
+        return offset + mid
+    if key > A[mid]:
+        return recursiveBinary(A[mid + 1:], key, offset + mid + 1)
+    else: 
+        return recursiveBinary(A[:mid], key, offset)
+\end{minted}
+
+Here's the C++ Code:
+\begin{minted}{cpp}
+int binarySearchRec(int l, int h, int key){
+    if (l == h){
+        if (key == A[l]) return l;
+        else return -1;
+    }
+    int mid = (l+h)/2;
+    if (A[mid] == key){
+        return mid;
+    } else if (key > A[mid]){
+        return binarySearchRec(mid + 1, h, key);
+    } else{
+        return binarySearchRec(l, mid - 1, key);
+    }
+}
+\end{minted}
+
+
+
+\end{document}
