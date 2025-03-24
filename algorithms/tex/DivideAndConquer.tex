@@ -551,8 +551,153 @@ When we look at equation \ref{timeFunc},
 \end{align*}
 
 \section{Master's Theorem for Dividing Functions}
+\begin{thm}{Master's Theorem for Dividing Functions}
+    If $T(n) = a \cdot T\left(\frac{n}{b}\right) + f(n)$ where $a > 1$, $b > 1$, and $f(n) = O(n^k\cdot \log^p{n})$ where $k \geq 0$, then:
+    \[
+    \begin{cases}
+        O(n^{\log_b{a}}) & \log_b{a} > k, \\\\
+        \begin{cases}
+            O(n^k \cdot \log^{p+1}{n}) & p > -1\\
+            O(n^k \cdot \log{(\log{n})}) & p = -1\\
+            O(n^k) & p < -1\\
+        \end{cases} & \log_b{a} = k\\\\
+        \begin{cases}
+            O(n^k\cdot \log^p{n}) & p \geq 0\\
+            O(n^k) & p < 0
+        \end{cases} & \log_b{a} < k \\ 
+    \end{cases}
+    \]
+\end{thm}
+
+\begin{lem}
+    $T(n) = 2T(\frac{n}{2}) + 1$
+    \begin{proof}[]
+        \begin{align*}
+            a &= 2 \tag{1} \label{a}\\
+            b &= 2 \tag{2} \label{b}\\
+            f(n) &= \Theta(1)\\
+            f(n) &= \Theta(n^0 \cdot \log^0{n}) \tag{4} \label{func}\\
+        \end{align*}
+        From equation ({\ref{func}}), \\
+        \quad k = 0\\
+        \quad p = 0\\
+        Substituting Values from (\ref{a}) and (\ref{b})
+        \begin{align*}
+            \log_2{2} &= 1 \tag{5} \label{logab}\\
+            k &= 0\\
+            Hence, 
+            \log_b{a} &> k \text{ (Case 1)}\\
+            \text{Substituting values from }  &\text{{\ref{logab}} in case equation}\\
+            \text{Hence } &\Theta(n^1)
+        \end{align*}
+    \end{proof}
+\end{lem}
+
+\begin{lem}
+    $T(n) = 4T(\frac{n}{2}) + n$
+    \begin{proof}[]
+        \begin{align*}
+            \log_2{4} &= 2 \tag{1} \label{logab}\\
+            k &= 1\\
+            p &= 0\\
+            Hence, 
+            \log_b{a} &> k \text{ (Case 1)}\\
+            \text{Substituting values from }  &\text{{\ref{logab}} in case equation}\\
+            \text{Hence } &\Theta(n^2)
+        \end{align*}
+    \end{proof}
+\end{lem}
+
+\begin{lem}
+    $T(n) = 8T(\frac{n}{2}) + n^2$
+    \begin{proof}[]
+        \begin{align*}
+            \log_2{8} &= 3 \tag{1} \label{logab}\\
+            k &= 2\\
+            p &= 0\\
+            Hence, 
+            \log_b{a} &> k \text{ (Case 1)}\\
+            \text{Substituting values from }  &\text{{\ref{logab}} in case equation}\\
+            \text{Hence } &\Theta(n^2)
+        \end{align*}
+    \end{proof}
+\end{lem}
+
+\begin{lem}
+    $T(n) = 9T(\frac{n}{3}) + n$
+    \begin{proof}[]
+        \begin{align*}
+            \log_3{9} &= 2 \tag{1} \label{logab}\\
+            k &= 1\\
+            p &= 0\\
+            Hence, 
+            \log_b{a} &> k \text{ (Case 1)}\\
+            \text{Substituting values from }  &\text{{\ref{logab}} in case equation}\\
+            \text{Hence } &\Theta(n^2)
+        \end{align*}
+    \end{proof}
+\end{lem}
+
+\begin{lem}
+    $T(n) = 9T(\frac{n}{3}) + n^2$
+    \begin{proof}[]
+        \begin{align*}
+            \log_3{9} &= 2 \tag{1} \label{logab}\\
+            k &= 2\\
+            p &= 0\\
+            Hence, 
+            \log_b{a} &= k \text{ (Case 2)}\\
+            \text{Substituting values from }  &\text{{\ref{logab}} in case equation}\\
+            \text{Hence } &\Theta(n^2 \cdot \log{n})
+        \end{align*}
+    \end{proof}
+\end{lem}
+
+If $\log_b{a} > k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ dominates the growth of the recurrence relation ($n^{\log_a{b}}$), as it contributes a higher asymptotic degree compared to $f(n) = O(n^k)$. Consequently, the time complexity of the recurrence is determined by the dominant term, resulting in $T(n) = \Theta(n^{\log_b{a}})$.
+\\
+\\
+if $\log_b{a} = k$ and $p > -1$, then the terms $a \cdot T\left(\frac{n}{b}\right)$ and $f(n)$ contribute equally to the growth of the recurrence relation. In this case, the time complexity of the recurrence is determined by the logarithmic factor times $f(n)$. Whatever is the $f(n)$, multiply it by $\log{n}$.
+\\
+\\
+If $\log_b{a} = k$ and $\log{n}$ in the denominator, then it would be take the n term and multiply it with $\log{(\log{n})}$. It would $O(n^k \cdot \log{(\log{n})})$
+\\
+\\
+If $\log_b{a} = k$ and $\log{n}$ with power $> 1$ in the denominator, then it denominator $\log$ term would be very negligible. So, we can just remove it. i.e. $\Theta(n^k)$.
+\\
+\\
+\\
+If $\log_b{a} < k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ insignificant to the growth of the recurrence relation. $f(n)$ will contribute higher asymptotic degree compared to former term. Consequently, the time complexity of the recurrence is determined by the dominant term, resulting in $T(n) = \Theta(f(n))$ as long as $\log$ term in the numerator. i.e. just take the second term. 
+
+If $\log$ term is in denominator, then we consider it to be negligible. i.e. $\Theta({n^k})$.
+
+\section{Recurrence Relation for Root Function}
 
 
+
+\section{Conclusion}
+So, if we have a decreasing function $T(n) = T(n - b) + f(n)$. The term $T(n - b)$ which has $O(n)$ time complexity. The total time complexity will be multiplication of time complexities of both the terms. 
+\\
+\\
+if there is coefficient for the first term, the time complexity will no longer be just n, going down each level, the time is doubling from the previous term. 
+If b > 1, only some values under $n$ will be explored. The number of steps would be $\frac{n}{b}$. if a > 1, the doubling happen only $\frac{n}{b}$ times. 
+\\
+\\
+If $\log_b{a} > k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ dominates the growth of the recurrence relation ($n^{\log_a{b}}$), as it contributes a higher asymptotic degree compared to $f(n) = O(n^k)$. Consequently, the time complexity of the recurrence is determined by the dominant term, resulting in $T(n) = \Theta(n^{\log_b{a}})$.
+\\
+\\
+if $\log_b{a} = k$ and $p > -1$, then the terms $a \cdot T\left(\frac{n}{b}\right)$ and $f(n)$ contribute equally to the growth of the recurrence relation. In this case, the time complexity of the recurrence is determined by the logarithmic factor times $f(n)$. Whatever is the $f(n)$, multiply it by $\log{n}$.
+\\
+\\
+If $\log_b{a} = k$ and $\log{n}$ in the denominator, then it would be take the n term and multiply it with $\log{(\log{n})}$. It would $O(n^k \cdot \log{(\log{n})})$
+\\
+\\
+If $\log_b{a} = k$ and $\log{n}$ with power $> 1$ in the denominator, then it denominator $\log$ term would be very negligible. So, we can just remove it. i.e. $\Theta(n^k)$.
+\\
+\\
+\\
+If $\log_b{a} < k$, then the term $a \cdot T\left(\frac{n}{b}\right)$ insignificant to the growth of the recurrence relation. $f(n)$ will contribute higher asymptotic degree compared to former term. Consequently, the time complexity of the recurrence is determined by the dominant term, resulting in $T(n) = \Theta(f(n))$ as long as $\log$ term in the numerator. i.e. just take the second term. 
+
+If $\log$ term is in denominator, then we consider it to be negligible. i.e. $\Theta({n^k})$.
 
 
 \end{document} 
