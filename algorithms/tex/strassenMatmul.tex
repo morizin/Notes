@@ -31,6 +31,32 @@
 
 \section {Matrix Multiplication}
 We have been learning Matrix Multiplication since High School. Its a great tool. Matrix Multiplication can be said as dot product of row of one matrix with the columns of other matrix.
+The most commonly known algorithm for Matrix Multiplication is using three for loop. Here's the algorithm:
+
+\begin{algorithm}
+    \caption{Simple Matrix Multiplication}
+    \begin{algorithmic}
+        \Procedure {MatMul}{$A, B, n$}
+            \For {$i \gets 0$ to $n$}
+                \For {$j \gets 0$ to $n$}
+                    \State $C[i, j] \gets 0$
+                    \For {$k \gets 0$ to $n$}
+                        \State $C[i, j] \gets C[i, j] + A[i, k] * B[k, j]$
+                    \EndFor
+                \EndFor
+            \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+The statement
+\begin{algorithmic}
+\State $C[i, j] \gets C[i, j] + A[i, k] * B[k, j]$
+\end{algorithmic}
+takes $O(n^3)$ because its inside 3 for loop. That the highest term. So this Algorithm take 
+\begin{center}
+    $\boxed{O(n^3)}$
+\end{center}
 
 \subsection{Matrix Multiplication with Divide and Conquer.}
 Divide and Conquer is the method of dividing a large problem into smaller same problem for which we know the answer and then combining it. 
