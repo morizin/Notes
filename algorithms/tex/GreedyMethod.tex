@@ -1,0 +1,73 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{algorithm, algpseudocode}
+\usepackage{tikz}
+\usepackage{jcappub}
+\usepackage{float, minted}
+\usetikzlibrary{calc, positioning}
+\usepackage{caption}
+
+\setlength{\parindent}{0em}
+
+\title{Greedy Method}
+\author[1] {Mohammed Rizin \footnote{He's Amazing}}
+\notoc
+\affiliation[1]{Umemployed, Navi Mumbai, Maharashtra}
+\emailAdd{mrizin2013@gmail.com}
+\date{\today}
+\arxivnumber{3423.2342}
+
+\counterwithin{algorithm}{section}
+
+\boldmath
+
+\abstract{Greedy Method is a well know algorithm for optimization problems}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+Greedy Method is a well known algorithm used in variety of application of problem from self driving car to simple optimization problems. The optimization problem could be minimizing or maximing. Its just we greedily select the most optimized problem.
+In this paper, we will analyze the Greedy Method Algorithm and its various usage in different applications.
+
+Suppose we have to go from city A to city B and you got 3 options:
+    \begin{enumerate}
+        \item By Bus
+        \item By car
+        \item Walk
+    \end{enumerate}
+
+In this optimization problem, you can consider the cost of travelling, the time to travel. Based on our criteria, we greedily select the best option. For e.g., You are in short of money and short of time as well, then the best option would be to choose to go by Bus. If you have lots of money , You could choose car then and so and on...
+
+\subsection{Constraint}
+As in above example, we didn't choose to take bus just like that. There would be questions:
+\paragraph{Why not taking car instead of bus?}
+Because we don't have much money. 
+\paragraph{Why dont you walk?}
+Because we don't have much time as well. 
+
+In this example, money and time are the constraints. Based on these constraints, we choose the best route to our destination. This decision-making process ensures that the solution is feasible and satisfies the given constraints.
+
+\subsection{Feasibility}
+For example, in the above scenario, choosing to walk would not be feasible if time is a critical constraint. Similarly, choosing to travel by car would not be feasible if money is a critical constraint. A solution is considered feasible if the solution to the problem satisfies all the constraints of the problem. If any one of constraint is not satisfied then it is not feasible solution. There could be multiple feasible solution and also no feasible solution for some constraint. 
+
+\subsection{Optimality}
+The Greedy Method ensures that the solution is not only feasible but also optimal for the given problem. Optimality means that the solution is the best among all feasible solutions. For instance, if both time and money are limited, the optimal solution would be to take the bus, as it balances both constraints effectively. There can be only one optimal solutions. 
+Problems that require either minimum or maximum results is called \textbf{Optimzation Problems}
+
+\textbf{Other Optimzation Methods:}
+\begin{enumerate}
+    \item Greedy Method
+    \item Dynamic Programming
+    \item Branch and Bound
+\end{enumerate}
+
+\subsection{Applications}
+The Greedy Method is widely used in various fields, such as:
+\begin{itemize}
+    \item \textbf{Graph Algorithms:} Algorithms like Dijkstra's shortest path and Prim's minimum spanning tree use the Greedy Method.
+    \item \textbf{Scheduling Problems:} Tasks like job scheduling and resource allocation often rely on greedy strategies.
+    \item \textbf{Optimization Problems:} Problems like the Knapsack problem and Huffman encoding are solved using greedy approaches.
+\end{itemize}
+
+
+\end{document}
