@@ -8,6 +8,32 @@
 \usepackage{caption}
 
 \setlength{\parindent}{0em}
+\newcommand{\drawArray}[1]{%
+    \newcount\arrayLength
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \coordinate (s) at (0, 0);
+            % \def\found{0}
+            % \arrayLength=0
+            \foreach \num [count=\i from 0] in {#1} {
+                \node[rectangle, draw, minimum size=8mm] at (s) {\num};
+                % \ifnum\num=#2
+                %     \node at ($(s)-(0,0.8)$) {$\underbrace{\i}_{key}$};
+                %     \xdef\found{1}
+                % \else
+                    \node at ($(s)-(0,0.7)$) {\i};
+                % \fi
+                
+                \coordinate (s) at ($(s) + (0.8, 0)$);
+                % \ifnum\found=0
+                % \global\advance\arrayLength by 1
+                % \fi
+            }
+        \end{tikzpicture}
+        \caption{Sample Array}
+    \end{figure}
+}
 
 \title{Greedy Method}
 \author[1] {Mohammed Rizin \footnote{He's Amazing}}
@@ -54,7 +80,7 @@ For example, in the above scenario, choosing to walk would not be feasible if ti
 The Greedy Method ensures that the solution is not only feasible but also optimal for the given problem. Optimality means that the solution is the best among all feasible solutions. For instance, if both time and money are limited, the optimal solution would be to take the bus, as it balances both constraints effectively. There can be only one optimal solutions. 
 Problems that require either minimum or maximum results is called \textbf{Optimzation Problems}
 
-\textbf{Other Optimzation Methods:}
+\textbf{Other Optimzation Strategies:}
 \begin{enumerate}
     \item Greedy Method
     \item Dynamic Programming
@@ -69,5 +95,35 @@ The Greedy Method is widely used in various fields, such as:
     \item \textbf{Optimization Problems:} Problems like the Knapsack problem and Huffman encoding are solved using greedy approaches.
 \end{itemize}
 
+\section{Methodology}
+Greedy Method says that a Problem should be solved in stages. Basically. It checks each and every input one after another and check if the input is feasible and add to the list.
+
+Suppose we have array of inputs:
+\drawArray{1, 35, 52, 52, 2}
+
+Here's the Algorithm:
+\begin{algorithm}[H]
+    \caption{Greedy Method}
+    \begin{algorithmic}
+        \Procedure {Greedy}{$a, n$}
+            \For{ $i \gets 1$ to $n$}
+                \State $x \gets Select(a)$
+                \If {$Feasible(x)$}
+                    \State $Solutions \gets Solutions + x$
+                \EndIf
+            \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+
+$a \gets $ Problem we are solving.
+
+$a_i \gets $ is input for that problem.
+
+Suppose you are buying a car. Then you started looking at all the cars in the market and you finally select. But is this reliable. \textbf{No}. This method is very very time-consuming But yeah this gives the best car.
+
+But what if you have selection procedure like You want only Toyota or Cadillac. Based on this contraint, You select some cars. This is stage 1. Then you would say, I want only sedan type cars. This will take (feasible) the sedan cars from Toyota and Cadillac only list. This is stage 2. This will go on and on... We find our best car. 
+But is that the best car? According to you, yeah. According to your selection procedure (eg choosing only toyota and Cadillac cars), this is best (optimal car). This would reduce the hurdle of checking every single car in the market by filtering out stage by stage.
 
 \end{document}
