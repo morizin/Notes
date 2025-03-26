@@ -126,4 +126,72 @@ Suppose you are buying a car. Then you started looking at all the cars in the ma
 But what if you have selection procedure like You want only Toyota or Cadillac. Based on this contraint, You select some cars. This is stage 1. Then you would say, I want only sedan type cars. This will take (feasible) the sedan cars from Toyota and Cadillac only list. This is stage 2. This will go on and on... We find our best car. 
 But is that the best car? According to you, yeah. According to your selection procedure (eg choosing only toyota and Cadillac cars), this is best (optimal car). This would reduce the hurdle of checking every single car in the market by filtering out stage by stage.
 
+Lets look at some Problems in the following sections.
+
+\section{Knapsack Problem}
+Suppose you have $n$ of objects to choose from to fill into your bag to sell it at the next town. The profit of each object and weight of each object is also given. You have to choose the right objects into the bag so that it doesn't exceed the given weight of the bag and also maximizes the profit. For our case, we have 7 elements and the limit of our sack is $15 Kg$. If the total weight of all objects is greater than the capacity of the bag. Then this is Knapsack Problem. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Objects} & \textbf{Profits} & \textbf{Weights}\\
+    \hline
+    1 & 10 & 2\\
+    2 & 5 & 3\\
+    3 & 15& 5\\
+    4 & 7& 7\\
+    5 & 6& 1\\
+    6 & 18& 4\\
+    7 & 3& 1\\
+    \hline
+    \end{tabular}
+\end{table}
+
+These objects can be divided, we can take fraction of the objects, then only we can use Knapsack Method.
+
+To solve this problem using the Greedy Method, we calculate the profit-to-weight ratio for each object and sort the objects in descending order of this ratio. Then, we select objects greedily until the bag's weight capacity is reached. So the selection procedure we follow is to take the maximum profit-to-weight ratio objects. That is our selection strategy for this problem. 
+\paragraph{Why profit-to-weight ratio?} 
+The reason we choose profit-to-weight. Since the constraint of this problem is the total weight of objects or partial objects should be less than or equal to the weight of the bag. If we know the profit of an object for 1 kg, and we greedily fill based on that value, we get the maximum profit because we are choosing the maximum profit-to-weight ratio in every single step
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Objects} & \textbf{Profits} & \textbf{Weights} & \textbf{Profit/Weight Ratio}\\
+    \hline
+    1 & 10 & 2 & 5\\
+    2 & 5 & 3 & 1.67\\
+    3 & 15 & 5 & 3\\
+    4 & 7 & 7 & 1\\
+    5 & 6 & 1 & 6\\
+    6 & 18 & 4 & 4.5\\
+    7 & 3 & 1 & 3\\
+    \hline
+    \end{tabular}
+    \caption{Object with its Profit/Weight Ratio}
+\end{table}
+
+\textbf{Steps to Solve:}
+\begin{enumerate}
+    \item Sort the objects by their profit-to-weight ratio in descending order.
+    \item Start adding objects to the bag until the total weight exceeds the bag's capacity.
+    \item If adding an object exceeds the capacity, add a fraction of the object to fill the bag.
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Add object 5 (Profit = 6, Weight = 1).
+    \item Add object 1 (Profit = 10, Weight = 2).
+    \item Add object 6 (Profit = 18, Weight = 4).
+    \item Add object 3 (Profit = 15, Weight = 5).
+    \item Add object 7 (Profit = 3, Weight = 1)
+    \item Add $\frac{2}{3}$ of object 2 (Profit = $\frac{10}{3}$, Weight = $2$).
+\end{itemize}
+
+\textbf{Total Profit: $\sum x_i\cdot p_i$ = } $6+10+18+15+3+3.333 = 55.333$\\
+\textbf{Total Weight: $\sum x_i\cdot w_i$ = } $1 + 2 + 4 + 5 + 1 + 2 = 15$
+
+There is also Zero-One Knapsack problem where you are not allowed to take fraction of an object. Either you can or you can't include that element.
+
 \end{document}
