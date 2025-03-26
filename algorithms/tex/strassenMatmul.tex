@@ -21,7 +21,9 @@
 
 \counterwithin{algorithm}{section}
 
-\abstract{Usual Matrix Multiplication takes \boldmath $O(n^3)$. To avoid such a long computation, We adopt Strassen's Matrix Multiplication Algorithm}
+\boldmath
+
+\abstract{Usual Matrix Multiplication takes $O(n^3)$. To avoid such a long computation, We adopt Strassen's Matrix Multiplication Algorithm}
 
 \begin{document}
 \maketitle
@@ -32,7 +34,169 @@ We have been learning Matrix Multiplication since High School. Its a great tool.
 
 \subsection{Matrix Multiplication with Divide and Conquer.}
 Divide and Conquer is the method of dividing a large problem into smaller same problem for which we know the answer and then combining it. 
+
+
 \paragraph{How do we use Divide And Conquer for Matrix muliplication}
+First of we need to know whats the small problem: 
+We know the Matrix multiplication of 2x2 Matrix. i.e.
+Suppose we have a 2x2 matrix:\\
 
+\[A = \left[\begin{matrix}
+    a_{11} & a_{12} \\
+    a_{21} & a_{22}\\
+\end{matrix}\right]\]
 
+\[B = \left[\begin{matrix}
+    b_{11} & b_{12} \\
+    b_{21} & b_{22}\\
+\end{matrix}\right]\]
+
+\begin{align*}
+    C_{11} &= a_{11} * b_{11} + a_{12} * b_{21}\\
+    C_{12} &= a_{11} * b_{12} + a_{12} * b_{22}\\
+    \\
+    C_{21} &= a_{21} * b_{11} + a_{22} * b_{21}\\
+    C_{12} &= a_{21} * b_{12} + a_{22} * b_{22}\\
+\end{align*}
+
+Now we know the solution to small problem.
+Now we need to decide, How to divide a big problem.
+\[A = \left[\begin{matrix}
+    a_{11} & a_{12} & \vline & a_{13} & a_{14} \\
+    a_{21} & a_{22} & \vline & a_{23} & a_{24} \\
+    \hline
+    a_{31} & a_{32} & \vline & a_{33} & a_{34} \\
+    a_{41} & a_{42} & \vline & a_{43} & a_{44} \\
+\end{matrix}\right]\]
+
+\[B = \left[\begin{matrix}
+    b_{11} & b_{12} & \vline & b_{13} & b_{14} \\
+    b_{21} & b_{22} & \vline & b_{23} & b_{24} \\
+    \hline
+    b_{31} & b_{32} & \vline & b_{33} & b_{34} \\
+    b_{41} & b_{42} & \vline & b_{43} & b_{44} \\
+\end{matrix}\right]\]
+If we consider the elements in this partitioned matrix as elements of new matrices:
+\[A = \begin{bmatrix}
+    A_{11} & A_{12} \\
+    A_{21} & A_{22}
+\end{bmatrix}, \quad
+B = \begin{bmatrix}
+    B_{11} & B_{12} \\
+    B_{21} & B_{22}
+\end{bmatrix}\]
+
+We get a two by two matrix, for which we know the solution. We will divide the big matrix into small matrix by doing this operations. This only works with even order square matrix. But if we pad the matrix by 1 unit on both sides of odd order square matrix will give us even order square matrix. 
+
+Here's the python code for Matrix Multiplication with Divide and Conquer.
+\begin{minted}{python3}
+def MatMul(A, B, n):
+    if n <= 2:
+        return np.array([
+            [A[0, 0] * B[0, 0] + A[0, 1]* B[1, 0],
+             A[0, 0] * B[0, 1] + A[0, 1]* B[1, 1]],
+              
+            [A[1, 0] * B[0, 0] + A[1, 1]* B[1, 0],
+             A[1, 0] * B[0, 1] + A[1, 1]* B[1, 1]]
+        ])
+    else:
+        mid = n//2
+        if n % 2 == 1:
+            null = np.zeros((n + 1, n + 1))
+            null[:n, :n] = A
+            A = np.copy(null)
+            null[:n, :n] = B
+            B = np.copy(null)
+            mid = (n + 1) // 2
+        top_left = MatMul(A[:mid, :mid], B[:mid, :mid], mid) + MatMul(A[:mid, mid:], B[mid:, :mid], mid)
+        top_right = MatMul(A[:mid, :mid], B[:mid, mid:], mid) + MatMul(A[:mid, mid:], B[mid:, mid:], mid)
+              
+        bottom_left = MatMul(A[mid:, :mid], B[:mid, :mid], mid) + MatMul(A[mid:, mid:], B[mid:, :mid], mid)
+        bottom_right = MatMul(A[mid:, :mid], B[:mid, mid:], mid) + MatMul(A[mid:, mid:], B[mid:, mid:], mid)
+
+        result = np.vstack(
+            [np.hstack([top_left, top_right]),
+            np.hstack([bottom_left, bottom_right])]
+        )
+        if result.shape[0] > n:
+            return result[:n, :n]
+        return result
+\end{minted}
+
+The Recurrence Relation for this algorithm is :
+\begin{equation}
+    T(n) = 
+    \begin{cases}
+        8 \cdot T\left(\frac{n}{2}\right) + n^2 & n > 2\\
+        1 & n <= 2
+    \end{cases}
+\end{equation}
+
+So this algorithm of Complexity $O(n^3)$. Since divide and Conquer Algorithm is recursive, it internally uses a stack which take extra space. So iterative algorithm is preferred (Both take $O(n^3)$).
+
+Matrix multiplication is troublesome process and it is active research topic and many of them had brought their own optimization for calculating MatMul. One of them is Strassen's Matrix Multiplication Method developed by Strassen.
+
+\section{Strassen's Matrix Multiplication}
+Major part of the matrix multiplication is multiplying. So if we can reduce the number of multiplication, we can make MatMul faster. Currently we have 8 multiplication operation. Strassen proposed some equation that has only 7 multiplication. Hence, reducing the time complexity a little less the $O(n^3)$. Here's the equations;
+\begin{align*}
+    P &= (A_{11} + A_{22}) \cdot (B_{11} + B_{22})\\
+    Q &= (A_{21} + A_{22}) \cdot B_{11}\\
+    R &= A_{11} \cdot (B_{12} - B_{22})\\
+    S &= A_{22} \cdot (B_{21} - B_{11} )\\
+    T &= (A_{11} + A_{12}) \cdot B_{22}\\
+    U &= (A_{21} - A_{11}) \cdot (B_{11} + B_{12})\\
+    V &= (A_{12} - A_{22}) \cdot (B_{21} + B_{22})\\
+    \\
+    C_{11} &= P + S - T + V\\
+    C_{12} &= R + T\\
+    C_{21} &= Q + S\\
+    C_{22} &= P + R - Q + U\\
+\end{align*}
+
+\begin{minted}{python3}
+def MatMul(A, B, n):
+    if n <= 2:
+        return np.array([
+            [A[0, 0] * B[0, 0] + A[0, 1]* B[1, 0],
+             A[0, 0] * B[0, 1] + A[0, 1]* B[1, 1]],
+              
+            [A[1, 0] * B[0, 0] + A[1, 1]* B[1, 0],
+             A[1, 0] * B[0, 1] + A[1, 1]* B[1, 1]]
+        ])
+    else:
+        mid = n//2
+        if n % 2 == 1:
+            null = np.zeros((n + 1, n + 1))
+            null[:n, :n] = A
+            A = np.copy(null)
+            null[:n, :n] = B
+            B = np.copy(null)
+            mid = (n + 1) // 2
+        top_left = MatMul(A[:mid, :mid], B[:mid, :mid], mid) + MatMul(A[:mid, mid:], B[mid:, :mid], mid)
+        top_right = MatMul(A[:mid, :mid], B[:mid, mid:], mid) + MatMul(A[:mid, mid:], B[mid:, mid:], mid)
+              
+        bottom_left = MatMul(A[mid:, :mid], B[:mid, :mid], mid) + MatMul(A[mid:, mid:], B[mid:, :mid], mid)
+        bottom_right = MatMul(A[mid:, :mid], B[:mid, mid:], mid) + MatMul(A[mid:, mid:], B[mid:, mid:], mid)
+
+        result = np.vstack(
+            [np.hstack([top_left, top_right]),
+            np.hstack([bottom_left, bottom_right])]
+        )
+        if result.shape[0] > n:
+            return result[:n, :n]
+        return result
+\end{minted}
+
+Now this seems a lot right. No, this only takes 7 multiplication process and couple of additions rather than 8 multiplication process. Since addition is less time taking than multiplication. This should be better. 
+
+The Recurrence Relation is:
+\begin{equation}
+    T(n) = 
+    \begin{cases}
+        7 \cdot T\left(\frac{n}{2}\right) + n^2 & n > 2\\
+        1 & n <= 2
+    \end{cases}
+\end{equation}
+
+So this algorithm of Complexity $O(n^{\log_2{7}})$. Since divide and Conquer Algorithm is recursive, it internally uses a stack which take extra space. So iterative algorithm is preferred (Both take $O(n^{2.81})$).
 \end{document}
